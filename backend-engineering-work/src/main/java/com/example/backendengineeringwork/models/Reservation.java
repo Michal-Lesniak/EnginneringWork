@@ -28,7 +28,7 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "person_id")
-    private Person person;
+    private User user;
 
     @NotBlank
     private String rentCity;

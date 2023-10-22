@@ -19,7 +19,7 @@ public class Car {
     @NotBlank
     private String brand;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "model_id")
     private CarModel model;
 

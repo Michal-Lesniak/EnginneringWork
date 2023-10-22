@@ -21,7 +21,7 @@ public class CarModel {
     @NotBlank
     private String name;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "engine_id")
     private Engine engine;
 
