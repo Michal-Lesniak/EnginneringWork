@@ -1,9 +1,20 @@
 package com.example.backendengineeringwork.controllers;
 
+import com.example.backendengineeringwork.dto.JwtRequest;
+import com.example.backendengineeringwork.dto.JwtResponse;
+import com.example.backendengineeringwork.models.User;
+import com.example.backendengineeringwork.repositories.UserRepository;
 import com.example.backendengineeringwork.security.JwtTokenUtil;
+import com.example.backendengineeringwork.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +25,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private DaoAuthenticationProvider daoAuthenticationProvider;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
@@ -31,7 +45,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody Users user) {
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
         if (userRepository.findByLogin(user.getLogin()) != null) {
             return ResponseEntity.badRequest().body("User with this login already exists");
         }
@@ -42,7 +56,7 @@ public class AuthController {
 
     private void authenticate(String username, String password) throws Exception {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            daoAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
