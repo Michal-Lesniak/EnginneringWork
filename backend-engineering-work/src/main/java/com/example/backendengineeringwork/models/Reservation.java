@@ -6,7 +6,6 @@ import lombok.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Data
@@ -28,7 +27,7 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "person_id")
-    private User user;
+    private AppUser user;
 
     @NotBlank
     private String rentCity;

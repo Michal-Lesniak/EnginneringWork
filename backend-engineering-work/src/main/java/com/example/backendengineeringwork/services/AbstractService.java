@@ -2,16 +2,17 @@ package com.example.backendengineeringwork.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
 public abstract class AbstractService<T, ID> {
 
-    @Autowired
-    private JpaRepository<T, ID> repository;
+    private final JpaRepository<T, ID> repository;
+
+    public AbstractService(JpaRepository<T, ID> repository){
+        this.repository = repository;
+    }
 
     public List<T> findAll() {
         return repository.findAll();
