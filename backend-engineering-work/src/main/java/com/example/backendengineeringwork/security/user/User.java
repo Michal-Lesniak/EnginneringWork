@@ -1,34 +1,41 @@
-package com.example.backendengineeringwork.models;
+package com.example.backendengineeringwork.security.user;
 
+import com.example.backendengineeringwork.models.Person;
+import com.example.backendengineeringwork.security.token.Token;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
+@Entity(name = "appUser")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class AppUser implements UserDetails {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "person_id")
     private Person person;
 
-    @NotBlank
-    private String login;
+
+    @Pattern(regexp = "^\\+[0-9]{1,3}\\.[0-9]{4,14}(?:x.+)?$")
+    private String mobilePhone;
+
+    @Email
+    private String email;
 
     @NotBlank
     @Size(min = 6)
@@ -37,9 +44,12 @@ public class AppUser implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-         return List.of(new SimpleGrantedAuthority(role.name()));
+        return null;
     }
 
     @Override
@@ -49,7 +59,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return login;
+        return email;
     }
 
     @Override

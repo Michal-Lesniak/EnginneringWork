@@ -1,5 +1,6 @@
 package com.example.backendengineeringwork.models;
 
+import com.example.backendengineeringwork.security.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,7 +28,7 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "person_id")
-    private AppUser user;
+    private User user;
 
     @NotBlank
     private String rentCity;

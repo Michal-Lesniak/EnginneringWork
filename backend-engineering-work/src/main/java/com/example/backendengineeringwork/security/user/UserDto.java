@@ -1,4 +1,4 @@
-package com.example.backendengineeringwork.dto;
+package com.example.backendengineeringwork.security.user;
 
 import lombok.Data;
 import javax.validation.constraints.*;
@@ -19,5 +19,5 @@ public class UserDto {
     private String password;
 
     @NotNull
-    private Long roleId;
+    private Enum<Role> role;
 }

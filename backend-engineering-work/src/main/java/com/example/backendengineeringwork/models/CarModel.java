@@ -21,7 +21,7 @@ public class CarModel {
     @NotBlank
     private String name;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "engine_id")
     private Engine engine;
 

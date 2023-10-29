@@ -12,6 +12,9 @@ import java.util.UUID;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,12 +29,6 @@ public class Person {
     @NotNull
     @Past
     private LocalDate bornDate;
-
-    @Pattern(regexp = "^\\+[0-9]{1,3}\\.[0-9]{4,14}(?:x.+)?$")
-    private String mobilePhone;
-
-    @Email
-    private String email;
 
     @NotBlank
     private String city;
