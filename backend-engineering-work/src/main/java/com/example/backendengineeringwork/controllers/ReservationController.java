@@ -7,4 +7,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/reservation")
 public class ReservationController extends AbstractController<Reservation, Long>{
+    //TODO make, change, delete reservation only for logging user
 }

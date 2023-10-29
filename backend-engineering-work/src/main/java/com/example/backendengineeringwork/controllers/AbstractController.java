@@ -12,7 +12,7 @@ import java.util.Optional;
 public abstract class AbstractController<T, ID> {
 
     @Autowired
-    private AbstractService<T, ID> service;
+    protected AbstractService<T, ID> service;
 
     @GetMapping
     public ResponseEntity<List<T>> getAll() {
