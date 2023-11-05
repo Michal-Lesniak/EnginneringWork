@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/persons")
+@RequestMapping("/api/v1/persons")
 public class PersonController extends AbstractController<Person, Long> {
-    //TODO ewentualnie dodac Patch dla niektorych sytuacji np zmiana emailu
 }

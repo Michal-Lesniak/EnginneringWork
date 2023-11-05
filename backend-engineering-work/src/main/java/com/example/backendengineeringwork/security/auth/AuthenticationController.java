@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/api/security")
+@RequestMapping("/api/v1/security")
 @RequiredArgsConstructor
 public class AuthenticationController {
 

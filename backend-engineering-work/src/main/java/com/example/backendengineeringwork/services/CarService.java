@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CarService extends AbstractService<Car, Long>{
 
-    @Autowired
     public CarService(CarRepository repository){
         super(repository);
     }

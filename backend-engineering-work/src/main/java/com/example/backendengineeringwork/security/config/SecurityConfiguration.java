@@ -28,9 +28,9 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 public class SecurityConfiguration {
     private static final AntPathRequestMatcher[] WHITE_LIST_URL = {
-            new AntPathRequestMatcher("/api/security/**"),
-            new AntPathRequestMatcher("/api/cars/**", GET.name()),
-            new AntPathRequestMatcher("/api/reservation/car/**", GET.name()),
+            new AntPathRequestMatcher("/api/v1/security/**"),
+            new AntPathRequestMatcher("/api/v1/cars/**", GET.name()),
+            new AntPathRequestMatcher("/api/v1/reservation/car/**", GET.name()),
             new AntPathRequestMatcher("/swagger-ui/**"),
             new AntPathRequestMatcher("/swagger-resources/**"),
             new AntPathRequestMatcher("/swagger-resources"),
@@ -50,11 +50,11 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                .requestMatchers("/api/cars/**").hasRole(ADMIN.name())
-                                .requestMatchers(GET,"/api/cities/**").hasAnyRole(ADMIN.name(), USER.name())
-                                .requestMatchers("/api/cities/**").hasRole(ADMIN.name())
-                                .requestMatchers("/api/persons/**").hasAnyRole(ADMIN.name(), USER.name())
-                                .requestMatchers("/api/reservation/**").hasAnyRole(ADMIN.name(), USER.name())
+                                .requestMatchers("/api/v1/cars/**").hasRole(ADMIN.name())
+                                .requestMatchers(GET,"/api/v1/cities/**").hasAnyRole(ADMIN.name(), USER.name())
+                                .requestMatchers("/api/v1/cities/**").hasRole(ADMIN.name())
+                                .requestMatchers("/api/v1/persons/**").hasAnyRole(ADMIN.name(), USER.name())
+                                .requestMatchers("/api/v1/reservation/**").hasAnyRole(ADMIN.name(), USER.name())
                                 .anyRequest()
                                 .authenticated()
                 )

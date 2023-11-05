@@ -1,7 +1,9 @@
 package com.example.backendengineeringwork.controllers;
 
 import com.example.backendengineeringwork.models.Reservation;
+import com.example.backendengineeringwork.services.ReservationService;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,15 +13,26 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/reservations")
+@RequestMapping("/api/v1/reservations")
 public class ReservationController extends AbstractController<Reservation, Long>{
-    @GetMapping("/car/{car_id}") //TODO reservationByCarId
+
+    @Autowired
+    ReservationService reservationService;
+    @GetMapping("/car/{car_id}")
     public ResponseEntity<List<Reservation>> getReservationByCarId(@PathVariable Long carId){
-        return null;
+        List<Reservation> reservations = reservationService.getReservationByCarId(carId);
+        if(reservations.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(reservations);
     }
 
-    @GetMapping("/person/{user_id}") //TODO reservationByUserId
+    @GetMapping("/person/{user_id}")
     public ResponseEntity<List<Reservation>> getReservationByUserId(@PathVariable Long userId){
-        return null;
+        List<Reservation> reservations = reservationService.getReservationByUserId(userId);
+        if(reservations.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(reservations);
     }
 }

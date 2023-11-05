@@ -27,7 +27,7 @@ public class Reservation {
     private LocalDateTime arrivalDate;
 
     @ManyToOne
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @NotBlank

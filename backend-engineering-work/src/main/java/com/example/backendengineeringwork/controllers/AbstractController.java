@@ -11,8 +11,7 @@ import java.util.Optional;
 
 public abstract class AbstractController<T, ID> {
 
-    @Autowired
-    protected AbstractService<T, ID> service;
+    public AbstractService<T, ID> service;
 
     @GetMapping
     public ResponseEntity<List<T>> getAll() {
