@@ -1,6 +1,6 @@
 package com.example.backendengineeringwork.controllers;
 
-import com.example.backendengineeringwork.dto.uploadImageCarDto;
+import com.example.backendengineeringwork.dto.ImageCar.RequestUploadImageCarDto;
 import com.example.backendengineeringwork.models.ImageCar;
 import com.example.backendengineeringwork.services.ImageCarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,22 @@ public class ImageCarController {
     private ImageCarService imageCarService;
 
     @PostMapping("/upload")
-    public ResponseEntity<ImageCar> uploadImage(@RequestParam("carImage") uploadImageCarDto uploadCarImageData) throws IOException {
+    public ResponseEntity<ImageCar> uploadImage(@RequestParam("carImage") RequestUploadImageCarDto uploadCarImageData) throws IOException {
         ImageCar imageCar = imageCarService.uploadImage(uploadCarImageData); //TODO sprawdz czy operacja save zwraca odpowiednie dane do ImageCaer
-        return ResponseEntity.ok().body(imageCar); //TODO dodaj walidacje i zwroc odpowiedni kod bledu
+        if(imageCarService.existImageById(imageCar.getId())){
+            return ResponseEntity.ok().body(imageCar);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity deleteImage(@RequestParam("carId") Long carId ){
+        imageCarService.deleteImage(carId);
+        if(imageCarService.existImageById(carId)){
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

@@ -1,11 +1,10 @@
 package com.example.backendengineeringwork.services;
 
-import com.example.backendengineeringwork.dto.uploadImageCarDto;
+import com.example.backendengineeringwork.dto.ImageCar.RequestUploadImageCarDto;
 import com.example.backendengineeringwork.models.ImageCar;
 import com.example.backendengineeringwork.repositories.ImageCarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +17,7 @@ public class ImageCarService {
     private final String PATH = "C:\\workspace\\";
 
 
-    public ImageCar uploadImage(uploadImageCarDto uploadImage) throws IOException {
+    public ImageCar uploadImage(RequestUploadImageCarDto uploadImage) throws IOException {
         String fullPath = PATH + "\\" + uploadImage.car().getId() + "\\" + uploadImage.file().getOriginalFilename();
         ImageCar image = new ImageCar();
         image.setName(uploadImage.file().getOriginalFilename());
@@ -30,4 +29,11 @@ public class ImageCarService {
         return imageCarRepository.save(image);
     }
 
+    public void deleteImage(Long id) {
+        imageCarRepository.deleteById(id);
+    }
+
+    public Boolean existImageById(Long id){
+        return imageCarRepository.existsById(id);
+    }
 }

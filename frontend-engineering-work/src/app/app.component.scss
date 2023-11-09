@@ -1,0 +1,10 @@
+mat-toolbar {
+    position: fixed;
+    z-index: 1;
+    height: 80px;
+    display: flex;
+
+    color: white;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }

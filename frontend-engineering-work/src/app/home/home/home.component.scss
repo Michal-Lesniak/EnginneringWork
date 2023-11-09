@@ -1,0 +1,83 @@
+ .home-container {
+    .main{
+        position: relative;
+        height: 100vh;
+        width: 100%;
+        background-image: url(../../../assets/pexels-david-iglesias-13356058.jpg);
+        background-size: cover;
+    }
+
+    .desc{
+        position: absolute;
+        color: white;
+        z-index: 1;
+        bottom: 5%;
+        left: 5%;
+        font-size: 24px;
+        font-weight: 500;
+    }
+
+    .often-choosen{
+        font-size: 24px;
+        font-weight: 500;
+        margin: 40px 40px 40px 70px;
+    }
+
+    .btn-show-cars{
+        position: absolute;
+        z-index: 1;
+        bottom: 5%;
+        right: 5%;
+    }
+ }
+
+
+ 
+ mat-card {
+    transition: transform 0.3s;
+  }
+  
+  mat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  }
+  
+  mat-card img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .mat-card-title,
+  .mat-card-subtitle {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  mat-grid-list {
+    width: 100%;
+    height: auto;
+  }
+  
+  mat-card-content {
+    min-height: 60px;
+  }
+  
+  mat-card-actions {
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Add some responsiveness */
+  @media (max-width: 600px) {
+    mat-grid-list {
+      cols: 1;
+    }
+  }
+  
+  @media (min-width: 601px) and (max-width: 960px) {
+    mat-grid-list {
+      cols: 2;
+    }
+  }

@@ -1,0 +1,22 @@
+<div class="cards-container">
+    <button mat-icon-button (click)="showPrev()" [disabled]="firstCardIndex === 0">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+  
+    <div *ngFor="let car of cars.slice(firstCardIndex, firstCardIndex + 4); let i = index" class="card">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{ car.title }}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [src]="car.imageUrl" alt="{{ car.title }}">
+        <mat-card-content>
+          <p>Max Speed: {{ car.maxSpeed }} km/h</p>
+          <p>Price per day: {{ car.pricePerDay }} $</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  
+    <button mat-icon-button (click)="showNext()" [disabled]="firstCardIndex >= cars.length - 4">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
