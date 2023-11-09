@@ -16,8 +16,15 @@ import java.util.List;
 @RequestMapping("/api/v1/reservations")
 public class ReservationController extends AbstractController<Reservation, Long>{
 
-    @Autowired
-    ReservationService reservationService;
+
+    private final ReservationService reservationService;
+
+    public  ReservationController(ReservationService service) {
+        super(service);
+        this.reservationService = service;
+    }
+
+
     @GetMapping("/car/{car_id}")
     public ResponseEntity<List<Reservation>> getReservationByCarId(@PathVariable Long carId){
         List<Reservation> reservations = reservationService.getReservationByCarId(carId);

@@ -13,6 +13,10 @@ public abstract class AbstractController<T, ID> {
 
     public AbstractService<T, ID> service;
 
+    public AbstractController(AbstractService<T,ID> service) {
+        this.service = service;
+    }
+
     @GetMapping
     public ResponseEntity<List<T>> getAll() {
         return ResponseEntity.ok(service.findAll());

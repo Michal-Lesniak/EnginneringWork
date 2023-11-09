@@ -14,12 +14,14 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/v1/users")
-@RequiredArgsConstructor
 public class UserController extends AbstractController<User, Long> {
 
-   @Autowired
-   UserService userService;
+   private final UserService userService;
 
+   public UserController( UserService userService) {
+       super(userService);
+       this.userService = userService;
+   }
     @PatchMapping
     public ResponseEntity<?> changePassword(
             @RequestBody ChangePasswordRequest request,
