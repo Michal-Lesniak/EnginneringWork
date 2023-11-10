@@ -9,7 +9,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { Routes } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
-import { CardsContainerComponent } from '../components/cards-container/cards-container.component';
+import { CardsContainerComponent } from './components/cards-container/cards-container.component';
+import { WhyWeSectionComponent } from './components/why-we-section/why-we-section.component';
+import { SocialMediaComponent } from './components/social-media/social-media.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }
@@ -18,7 +20,9 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     HomeComponent,
-    CardsContainerComponent
+    CardsContainerComponent,
+    WhyWeSectionComponent,
+    SocialMediaComponent
   ],
   imports: [
     CommonModule,

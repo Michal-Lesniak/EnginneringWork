@@ -3,20 +3,37 @@ import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } fro
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
-
+  constructor(private service: AuthService, private router: Router,private tostr:ToastrService) { }
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.authService.isAdmin()) {
-      return true;
-    } else {
-      this.router.navigate(['/login']);
+   
+    if (this.service.isloggedin()) {
+      if (route.url.length > 0) {
+        let menu = route.url[0].path;
+        if (menu == 'user') {
+          if (this.service.getrole() == 'admin') {
+            return true;
+          } else {
+            this.router.navigate(['']);
+              this.tostr.warning('You dont have access.')
+            return false;
+          }
+        }else{
+          return true;
+        }
+      } else {
+        return true;
+      }
+    }
+    else {
+      this.router.navigate(['login']);
       return false;
     }
   }

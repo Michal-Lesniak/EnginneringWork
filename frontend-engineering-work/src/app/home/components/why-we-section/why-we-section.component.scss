@@ -1,0 +1,52 @@
+.container {
+    display: flex;
+    padding: 50px;
+    flex-direction: column;
+    background-color: #000; // Tło dla całego kontenera, zakładając że jest czarne
+    color: #fff; // Kolor tekstu
+    font-family: 'Arial', sans-serif; // Przykładowa czcionka
+  
+    .stats {
+        display: flex;
+        justify-content: space-around;
+        margin: 20px 0 50px 0;
+    
+        .stat-item {
+          background-color: #333; // przykładowy kolor tła
+          color: #fff; // przykładowy kolor tekstu
+          padding: 20px;
+          border-radius: 10px;
+          text-align: center;
+    
+          .stat-value {
+            font-size: 2em;
+            color: #3f51b5;
+            font-weight: bold;
+          }
+    
+          .stat-description {
+            display: block;
+            margin-top: 10px;
+          }
+        }
+    
+    }
+  
+    .passion {
+      flex: 1;
+      padding: 20px;
+      text-align: center;
+      overflow: auto; // Zapewnia przewijanie, jeśli treść jest zbyt długa
+  
+      h2 {
+        margin-bottom: 15px;
+        font-size: 2em;
+      }
+  
+      p {
+        font-size: 1em;
+        line-height: 1.5;
+        margin-bottom: 10px;
+      }
+    }
+  }

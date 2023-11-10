@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CardsContainerComponent } from 'src/app/components/cards-container/cards-container.component';
 
 interface Car {
   brand: string;

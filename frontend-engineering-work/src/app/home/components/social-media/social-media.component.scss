@@ -1,0 +1,28 @@
+.social-media-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #333; // Ciemne tło
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      margin: 0 10px;
+      border-radius: 50%;
+      background-color: #fff; // Białe tło dla ikon
+      color: #000; // Kolor ikony
+      font-size: 24px;
+      transition: transform 0.3s ease;
+  
+      &:hover {
+        transform: scale(1.1);
+        color: #555; // Kolor ikony po najechaniu
+      }
+  
+      i {
+        transition: color 0.3s ease;
+      }
+    }
+  }
