@@ -6,6 +6,8 @@ import { HomeComponent } from './sites/home/home.component';
 import { CarsComponent } from './sites/cars/cars.component';
 import { ContactComponent } from './sites/contact/contact.component';
 import { AdminComponent } from './sites/admin/admin.component';
+import { MyProfileComponent } from './sites/my-profile/my-profile.component';
+import { AdminGuard } from './security/guards/admin.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -14,7 +16,8 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'admin', component: AdminComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
+  { path: 'myAccount', component: MyProfileComponent, canActivate: [AdminGuard] },
 ];
 
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 interface Car {
   brand: string;
   model: string;
@@ -13,6 +14,8 @@ interface Car {
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
+
   constructor() { }
 
   ngOnInit(): void {

@@ -24,6 +24,7 @@ import { WhyWeSectionComponent } from './components/why-we-section/why-we-sectio
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MyProfileComponent } from './sites/my-profile/my-profile.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     ContactComponent,
     CardsContainerComponent,
     SocialMediaComponent,
-    WhyWeSectionComponent
+    WhyWeSectionComponent,
+    MyProfileComponent
   ],
   imports: [
     ToastrModule.forRoot(),

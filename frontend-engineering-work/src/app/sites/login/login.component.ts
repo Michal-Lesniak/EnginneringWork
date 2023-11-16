@@ -26,11 +26,9 @@ export class LoginComponent {
 
   proceedlogin() {
     if (this.loginform.valid) {
-      this.service.LoginUser(this.loginform.value).subscribe((response: any) => {
-          sessionStorage.setItem("access_token", response.access_token);
-          sessionStorage.setItem("refresh_token", response.refresh_token);
-          this.router.navigate(['home']);
+      this.service.login(this.loginform.value).subscribe((response: any) => {
           this.toastr.success('Registered successfully');
+          this.router.navigate(['home']);
         });
   }
 }
