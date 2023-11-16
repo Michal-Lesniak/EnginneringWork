@@ -13,5 +13,4 @@ public class CarController extends AbstractController<Car, Long> {
     public CarController(CarService service){
         super(service);
     }
-    //TODO dodawnie zdjęć, zapis na serwerze ;D ??? Zapis zdjęć, usunięcie zdjęcia
 }

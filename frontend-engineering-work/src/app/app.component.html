@@ -1,24 +1,31 @@
 <mat-toolbar color="primary">
   <div>
-      MajkiRent - Twoje Auto Marzeń
+      MajkiRent - Your Dream Car
   </div>
 
   <div class="navigation_container">
       <button mat-button routerLink="/home">
-          <span>Strona Główna</span>    
-      </button>
-      <button mat-button routerLink="/about">
-          <span>O nas</span>    
+          <span>Home</span>
       </button>
       <button mat-button routerLink="/cars">
-          <span>Samochody</span>    
+          <span>Cars</span>
       </button>
       <button mat-button routerLink="/contact">
-          <span>Kontakt</span>    
+          <span>Contact</span>
       </button>
-      <button mat-button routerLink="/login">
-        <span>Login</span>    
-    </button>
+      <!-- Niezalogowany użytkownik -->
+      <button *ngIf="true" mat-button routerLink="/login">
+        <span>Login</span>
+      </button>
+      <!-- Zalogowany użytkownik -->
+      <button *ngIf="false" mat-button routerLink="/login">
+        <span>Account</span>
+      </button>
+      <!-- IsAdmin -->
+      <button *ngIf="false" mat-button routerLink="/login">
+        <span>Admin Panel</span>
+      </button>
+
   </div>
 </mat-toolbar>
 <router-outlet></router-outlet>

@@ -4,19 +4,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
     .mat-card-custom {
         .mat-card-header-custom {
           background: #fff;
           text-align: center;
-          
+
           h2 {
             margin: 0;
             padding: 16px;
             font-size: 24px;
           }
         }
-      
+
         .mat-card-content-custom {
           display: flex;
           flex-direction: column;
@@ -24,29 +24,30 @@
           padding: 20px;
 
           .example-form {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            gap: 10px;
+            grid-template-columns: 1fr 1fr;
           }
-      
+
           .form-field-custom {
             width: 100%;
             max-width: 600px;
-      
+
             input {
               font-size: 16px;
             }
-            
+
             mat-label {
               font-size: 16px;
             }
           }
-      
+
           .action-buttons {
             display: flex;
             justify-content: space-between;
             width: 100%;
             max-width: 400px;
-      
+
             button, a {
               flex: 1;
               margin: 8px;
@@ -54,16 +55,16 @@
           }
         }
       }
-    
+
       ::ng-deep {
         .mat-raised-button {
           border-radius: 4px;
         }
-        
+
         .mat-form-field-appearance-legacy .mat-form-field-infix {
           padding: 0;
         }
-        
+
         .mat-form-field {
           &.example-full-width {
             width: 100%;

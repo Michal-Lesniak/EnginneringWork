@@ -17,18 +17,29 @@ export class RegisterComponent {
   }
 
   registerform = this.builder.group({
-    id: this.builder.control('', Validators.compose([Validators.required, Validators.minLength(5)])),
-    name: this.builder.control('', Validators.required),
-    password: this.builder.control('', Validators.compose([Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')])),
-    email: this.builder.control('', Validators.compose([Validators.required, Validators.email])),
-    gender: this.builder.control('male'),
-    role: this.builder.control(''),
-    isactive: this.builder.control(false)
+    firstname: ['', [Validators.required, Validators.minLength(5)]],
+    lastname: ['', Validators.required],
+    password: ['', [
+      Validators.required,
+      Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')
+    ]],
+    email: ['', [Validators.required, Validators.email]],
+    borndate: ['', Validators.required],
+    mobilePhone: ['', [
+      Validators.required,
+      Validators.pattern('^\\+?[1-9]\\d{1,14}$')
+    ]],
+    city: ['', Validators.required],
+    postcode: ['', [
+      Validators.required,
+      Validators.pattern('^\\d+-\\d+$')
+    ]],
+    address: ['', Validators.required]
   });
   proceedregister() {
     if (this.registerform.valid) {
       this.service.RegisterUser(this.registerform.value).subscribe(result => {
-        this.toastr.success('Please contact admin for enable access.','Registered successfully')
+        this.toastr.success('Registered successfully')
         this.router.navigate(['login'])
       });
     } else {

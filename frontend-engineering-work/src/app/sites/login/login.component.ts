@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { access } from 'fs';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+
   constructor(private builder: FormBuilder, private toastr: ToastrService, private service: AuthService,
     private router: Router) {
       sessionStorage.clear();
@@ -18,28 +20,18 @@ export class LoginComponent {
   result: any;
 
   loginform = this.builder.group({
-    id: this.builder.control('', Validators.required),
+    email: this.builder.control('', [Validators.email, Validators.required]),
     password: this.builder.control('', Validators.required)
   });
 
   proceedlogin() {
     if (this.loginform.valid) {
-      this.service.GetUserbyCode(this.loginform.value.id).subscribe(item => {
-        this.result = item;
-        if (this.result.password === this.loginform.value.password) {
-          if (this.result.isactive) {
-            sessionStorage.setItem('username',this.result.id);
-            sessionStorage.setItem('role',this.result.role);
-            this.router.navigate(['']);
-          } else {
-            this.toastr.error('Please contact Admin', 'InActive User');
-          }
-        } else {
-          this.toastr.error('Invalid credentials');
-        }
-      });
-    } else {
-      this.toastr.warning('Please enter valid data.')
-    }
+      this.service.LoginUser(this.loginform.value).subscribe((response: any) => {
+          sessionStorage.setItem("access_token", response.access_token);
+          sessionStorage.setItem("refresh_token", response.refresh_token);
+          this.router.navigate(['home']);
+          this.toastr.success('Registered successfully');
+        });
   }
+}
 }

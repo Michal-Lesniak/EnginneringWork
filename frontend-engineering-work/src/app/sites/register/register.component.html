@@ -1,30 +1,54 @@
 <div class="register-section">
   <mat-card class="mat-card-custom">
     <mat-card-header class="mat-card-header-custom">
-        <h2>Registeration</h2>
+        <h2>Create new account</h2>
     </mat-card-header>
     <mat-card-content class="mat-card-content-custom">
-        <form class="example-form" [formGroup]="registerform" (ngSubmit)="proceedregister()">
-            <mat-form-field class="form-field-custom">
-              <mat-label>Username</mat-label>
-              <input matInput formControlName="id" >
-            </mat-form-field>
-            <mat-form-field class="form-field-custom">
-                <mat-label>Name</mat-label>
-                <input matInput formControlName="name" >
+        <form  [formGroup]="registerform" (ngSubmit)="proceedregister()">
+            <div class="example-form">
+                <mat-form-field class="form-field-custom">
+                <mat-label>Firstname</mat-label>
+                <input matInput formControlName="firstname" >
+              </mat-form-field>
+              <mat-form-field class="form-field-custom">
+                <mat-label>Lastname</mat-label>
+                <input matInput formControlName="lastname" >
+              </mat-form-field>
+              <mat-form-field class="form-field-custom">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" >
               </mat-form-field>
               <mat-form-field class="form-field-custom">
                 <mat-label>Password</mat-label>
                 <input type="password" matInput formControlName="password" >
               </mat-form-field>
               <mat-form-field class="form-field-custom">
-                <mat-label>Email</mat-label>
-                <input matInput formControlName="email" >
+                <mat-label>Mobile</mat-label>
+                <input matInput formControlName="mobilePhone" >
               </mat-form-field>
-              <mat-radio-group  class="mat-radio-custom" formControlName="gender" aria-label="Select an option">
-                <mat-radio-button value="male">Male</mat-radio-button>
-                <mat-radio-button value="female">Female</mat-radio-button>
-              </mat-radio-group>
+              <mat-form-field class="form-field-custom">
+                  <mat-label>City</mat-label>
+                  <input matInput formControlName="city" >
+                </mat-form-field>
+                <mat-form-field class="form-field-custom">
+                  <mat-label>PostCode</mat-label>
+                  <input matInput formControlName="postcode">
+                </mat-form-field>
+                <mat-form-field class="form-field-custom">
+                  <mat-label>Address</mat-label>
+                  <input matInput formControlName="address">
+                </mat-form-field>
+                <mat-form-field class="form-field-custom">
+                  <mat-label>BornDate</mat-label>
+                  <input matInput formControlName="borndate" [matDatepicker]="picker">
+                  <mat-hint>MM/DD/YYYY</mat-hint>
+                  <mat-datepicker-toggle matIconSuffix [for]="picker">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker>
+                  </mat-datepicker>
+                </mat-form-field>
+              </div>
               <div class="action-buttons">
                 <button mat-raised-button color="primary">Submit</button>
                 <a routerLink="/login" mat-raised-button color="accent">Back to Login</a>

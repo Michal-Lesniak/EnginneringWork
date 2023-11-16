@@ -6,14 +6,14 @@
     <mat-card-content class="mat-card-content-custom">
         <form [formGroup]="loginform" (ngSubmit)="proceedlogin()">
             <mat-form-field class="form-field-custom">
-              <mat-label>Username</mat-label>
-              <input matInput formControlName="id" >
+              <mat-label>E-mail</mat-label>
+              <input matInput formControlName="email" >
             </mat-form-field>
               <mat-form-field class="form-field-custom">
                 <mat-label>Password</mat-label>
                 <input matInput type="password" formControlName="password" >
               </mat-form-field>
-            
+
               <div class="action-buttons">
                 <button mat-raised-button color="primary">Login</button>
                 <a routerLink="/register" mat-raised-button color="accent">New User?</a>

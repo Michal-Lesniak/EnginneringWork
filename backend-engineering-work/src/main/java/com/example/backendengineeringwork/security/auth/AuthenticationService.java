@@ -6,6 +6,7 @@ import com.example.backendengineeringwork.security.config.JwtService;
 import com.example.backendengineeringwork.security.token.Token;
 import com.example.backendengineeringwork.security.token.TokenRepository;
 import com.example.backendengineeringwork.security.token.TokenType;
+import com.example.backendengineeringwork.security.user.Role;
 import com.example.backendengineeringwork.security.user.User;
 import com.example.backendengineeringwork.security.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,7 +43,7 @@ public class AuthenticationService {
                 .mobilePhone(request.getMobilePhone())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(request.getRole())
+                .role(Role.USER)
                 .build();
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);

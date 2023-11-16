@@ -1,0 +1,78 @@
+.contact-site{
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  height: 100vh;
+
+  app-social-media{
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+  }
+
+  .contact-container {
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    .contact-details, .contact-form {
+      flex: 1;
+      margin-right: 20px;
+
+      h2 {
+        color: #000; // Dostosuj kolor do projektu
+      }
+
+      p, a {
+        color: #666; // Dostosuj kolor do projektu
+      }
+
+      button {
+        margin-top: 20px; // Dostosuj odstęp do projektu
+      }
+
+      .address {
+        margin-top: 40px;
+      }
+    }
+
+    .contact-details{
+      padding-left: 100px;
+    }
+
+    .contact-form {
+      padding-right: 100px;
+      form {
+        display: flex;
+        flex-direction: column;
+
+        label {
+          margin-top: 10px;
+        }
+
+        input, textarea {
+          margin-top: 5px;
+          padding: 10px;
+          border: 1px solid #ccc; // Dostosuj kolor do projektu
+          border-radius: 4px; // Dostosuj zaokrąglenie do projektu
+        }
+
+        .checkbox {
+          margin-top: 15px;
+          display: flex;
+          align-items: center;
+
+          input {
+            margin-right: 5px;
+          }
+        }
+
+        button {
+          margin-top: 20px; // Dostosuj odstęp do projektu
+        }
+      }
+    }
+  }
+}
+

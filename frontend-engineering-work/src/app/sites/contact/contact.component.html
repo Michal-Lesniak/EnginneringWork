@@ -1,1 +1,33 @@
-<p>contact works!</p>
+<div class="contact-site">
+  <div class="contact-container">
+    <div class="contact-details">
+      <h2>Contact us</h2>
+      <p><a href="mailto:contact@majkirent.pl">contact@majkirent.pl</a></p>
+      <p>+48 431 302 331</p>
+      <p> Helpline open 24/7 Office hours:<br>Monday - Friday 8:00 am - 9:00 pm.</p>
+      <p> Pickup/return outside business hours and on weekends <br> is an additional cost of 20$</p>
+      <div class="address">
+        <h3>Rental address:</h3>
+        <p>Kamieńskiego 1<br>51-126 Wrocław</p>
+        <h3>Registration address:</h3>
+        <p>MajkiRent sp. z o.o. <br> Plac Muzealny 2<br> 00-095 Warszawa</p>
+      </div>
+    </div>
+    <div class="contact-form">
+      <h2>Write to us</h2>
+      <form>
+        <label for="email">Your email address *</label>
+        <input type="email" id="email" name="email" required>
+        <label for="message">Message Content *</label>
+        <textarea id="message" rows="8" name="message" required></textarea>
+        <div class="checkbox">
+          <input type="checkbox" id="agree" name="agree" required>
+          <label for="agree">* I agree to the use of personal information in accordance with the Privacy Policy.</label>
+        </div>
+        <button type="submit" mat-raised-button color="primary">Send message</button>
+      </form>
+    </div>
+  </div>
+  <app-social-media></app-social-media>
+</div>
+

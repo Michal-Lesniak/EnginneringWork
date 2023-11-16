@@ -19,25 +19,25 @@ public class BackendEngineeringWorkApplication {
 		SpringApplication.run(BackendEngineeringWorkApplication.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner commandLineRunner(
-			AuthenticationService service
-	) {
-		return args -> {
-			var admin = RegisterRequest.builder()
-					.firstname("Admin")
-					.lastname("Admin")
-					.bornDate(LocalDate.of(2001,10,9))
-					.city("Wroclaw")
-					.postCode("00-000")
-					.address("Zwierzynska 10")
-					.mobilePhone("123456321")
-					.email("admin@mail.com")
-					.password("password")
-					.role(ADMIN)
-					.build();
-			System.out.println("Admin token: " + service.register(admin).getAccessToken());
-		};
-	}
+//	@Bean
+//	public CommandLineRunner commandLineRunner(
+//			AuthenticationService service
+//	) {
+//		return args -> {
+//			var admin = RegisterRequest.builder()
+//					.firstname("Admin")
+//					.lastname("Admin")
+//					.bornDate(LocalDate.of(2001,10,9))
+//					.city("Wroclaw")
+//					.postCode("00-000")
+//					.address("Zwierzynska 10")
+//					.mobilePhone("123456321")
+//					.email("admin@mail.com")
+//					.password("password")
+//					.role(ADMIN)
+//					.build();
+//			System.out.println("Admin token: " + service.register(admin).getAccessToken());
+//		};
+//	}
 
 }
