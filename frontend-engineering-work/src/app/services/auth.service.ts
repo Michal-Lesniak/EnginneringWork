@@ -12,10 +12,20 @@ import { ApiServiceService } from './api-service.service';
 export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();
+  private readonly ACCESS_TOKEN_NAME = 'access_token';
+  private readonly REFRESH_TOKEN_NAME = 'refresh_token';
+
+  get access_token():any {
+    return localStorage.getItem(this.ACCESS_TOKEN_NAME);
+  }
+
+  get refresh_token():any {
+    return localStorage.getItem(this.REFRESH_TOKEN_NAME);  
+  }
 
   constructor(private apiService:ApiServiceService) {
-    const access_token = localStorage.getItem("access_token");
-    const refresh_token = localStorage.getItem("refresh_token");
+    const access_token = localStorage.getItem(this.ACCESS_TOKEN_NAME);
+    const refresh_token = localStorage.getItem(this.REFRESH_TOKEN_NAME);
     this._isLoggedIn$.next(!!access_token);
 
   }
