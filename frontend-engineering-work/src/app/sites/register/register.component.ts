@@ -39,7 +39,7 @@ export class RegisterComponent {
   });
   proceedregister() {
     if (this.registerform.valid) {
-      this.service.RegisterUser(this.registerform.value).subscribe(result => {
+      this.service.registerUser(this.registerform.value).subscribe(result => {
         this.toastr.success('Registered successfully')
         this.router.navigate(['login'])
       });

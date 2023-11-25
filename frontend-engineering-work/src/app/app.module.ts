@@ -26,6 +26,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MyProfileComponent } from './sites/my-profile/my-profile.component';
 import { AuthInterceptorProvider } from './security/auth.interceptor';
+import { HasRoleDirective } from './security/has-role.directive';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { AuthInterceptorProvider } from './security/auth.interceptor';
     CardsContainerComponent,
     SocialMediaComponent,
     WhyWeSectionComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    HasRoleDirective
   ],
   imports: [
     ToastrModule.forRoot(),
@@ -60,7 +62,7 @@ import { AuthInterceptorProvider } from './security/auth.interceptor';
     MatNativeDateModule,
     MatDatepickerModule,
   ],
-  providers: [AuthInterceptorProvider],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

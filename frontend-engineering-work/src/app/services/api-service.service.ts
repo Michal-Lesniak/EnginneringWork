@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,18 +9,18 @@ export class ApiServiceService {
 
   constructor(private http:HttpClient) { }
 
-  apiurl='http://localhost:8080/';
+  apiurl='http://localhost:8080/api/v1';
   securityapiurl='http://localhost:8080/api/v1/security';
 
-  RegisterUser(newUserData: any){
+  registerUser(newUserData: any){
     return this.http.post(this.securityapiurl + "/register" , newUserData )
   }
 
-  LoginUser(loginData: any){
+  loginUser(loginData: any){
     return this.http.post(this.securityapiurl+'/login', loginData);
   }
 
-  // getCars(){
-  //   return this.http.get()
-  // }
+  getCars(){
+    return this.http.get(this.apiurl+'/cars');
+  }
 }

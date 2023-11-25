@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { ApiServiceService } from './services/api-service.service';
+import {  Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +13,18 @@ export class AppComponent implements OnInit{
   isAdmin: boolean = false;
   isLogged: boolean = false;
 
-  constructor(private authService:AuthService){}
+  constructor(private authService:AuthService, private apiService:ApiServiceService, private router:Router){}
 
-  title = 'frontend-engineering-work';
+  title = 'MajkiRent';
 
   ngOnInit(): void {
     this.authService.isLoggedIn$.subscribe(val => this.isLogged = val);
   }
+
+  logout(){
+    this.authService.logoutUser().subscribe(() => {
+      this.router.navigate(['home']);
+    });
+  }
+
 }

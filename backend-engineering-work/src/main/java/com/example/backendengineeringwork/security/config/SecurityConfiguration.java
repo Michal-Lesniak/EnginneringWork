@@ -3,6 +3,7 @@ package com.example.backendengineeringwork.security.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import static com.example.backendengineeringwork.security.user.Permission.*;
 import static com.example.backendengineeringwork.security.user.Role.*;
@@ -28,6 +30,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 public class SecurityConfiguration {
     private static final AntPathRequestMatcher[] WHITE_LIST_URL = {
+            new AntPathRequestMatcher("/api/v1/auth/**"),
             new AntPathRequestMatcher("/api/v1/security/**"),
             new AntPathRequestMatcher("/api/v1/cars/**", GET.name()),
             new AntPathRequestMatcher("/api/v1/reservation/car/**", GET.name()),
@@ -47,22 +50,23 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req ->
-                        req.requestMatchers(WHITE_LIST_URL)
-                                .permitAll()
-                                .requestMatchers("/api/v1/cars/**").hasRole(ADMIN.name())
-                                .requestMatchers(GET,"/api/v1/cities/**").hasAnyRole(ADMIN.name(), USER.name())
-                                .requestMatchers("/api/v1/cities/**").hasRole(ADMIN.name())
-                                .requestMatchers("/api/v1/persons/**").hasAnyRole(ADMIN.name(), USER.name())
-                                .requestMatchers("/api/v1/reservation/**").hasAnyRole(ADMIN.name(), USER.name())
-                                .anyRequest()
-                                .authenticated()
+                .authorizeHttpRequests(req -> req
+                        .requestMatchers(WHITE_LIST_URL)
+                        .permitAll()
+                        .requestMatchers("/api/v1/cars/**").hasRole(ADMIN.name())
+                        .requestMatchers(GET,"/api/v1/cities/**").hasAnyRole(ADMIN.name(), USER.name())
+                        .requestMatchers("/api/v1/cities/**").hasRole(ADMIN.name())
+                        .requestMatchers("/api/v1/persons/**").hasAnyRole(ADMIN.name(), USER.name())
+                        .requestMatchers("/api/v1/reservation/**").hasAnyRole(ADMIN.name(), USER.name())
+                        .anyRequest()
+                        .authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout ->
-                        logout.logoutUrl("/api/v1/auth/logout")
+                        logout
+                                .logoutUrl("/api/v1/auth/logout")
                                 .addLogoutHandler(logoutHandler)
                                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 )
