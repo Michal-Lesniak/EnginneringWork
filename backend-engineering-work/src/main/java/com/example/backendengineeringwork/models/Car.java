@@ -3,12 +3,14 @@ package com.example.backendengineeringwork.models;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import java.util.Set;
 import java.util.UUID;
+
 
 @Entity
 @Data

@@ -15,6 +15,7 @@ import static com.example.backendengineeringwork.security.user.Permission.*;
 public enum Role {
 
     USER,
-    ADMIN
+    ADMIN,
 
 }
+
