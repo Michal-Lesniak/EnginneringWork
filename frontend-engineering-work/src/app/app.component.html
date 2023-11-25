@@ -18,11 +18,12 @@
         <span>Login</span>
       </button>
       <!-- Zalogowany użytkownik -->
-      <button *appHasRole="'User'" mat-button routerLink="/myAccount">
+      <button *appHasRole="'ROLE_USER'" mat-button routerLink="/myAccount">
         <span>My Account</span>
       </button>
       <!-- IsAdmin -->
-      <button *appHasRole="'Admin'" mat-button routerLink="/admin">
+      <!-- *ngIf="this.authService.user.roles[0]" -->
+      <button  *appHasRole="'ROLE_ADMIN'"  mat-button routerLink="/admin">
         <span>Admin Panel</span>
       </button>
       <button *ngIf="isLogged" (click)="logout()" mat-button>

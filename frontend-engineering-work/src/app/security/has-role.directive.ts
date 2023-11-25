@@ -1,4 +1,4 @@
-import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 
 @Directive({
@@ -6,10 +6,11 @@ import { AuthService } from '../services/auth.service';
 })
 export class HasRoleDirective {
 
+
   @Input()
   set appHasRole(role: string) {
 
-    if(this.authService.hasRole(role)) {
+    if(this.authService.user?.roles.includes(role)) {
       this.viewContainerRef.createEmbeddedView(this.templateRef)
     } else {
       this.viewContainerRef.clear()

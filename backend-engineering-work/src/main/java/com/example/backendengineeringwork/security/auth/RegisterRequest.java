@@ -23,5 +23,5 @@ public class RegisterRequest {
     private String address;
     private String email;
     private String password;
-    private Role role; //TODO usun z reqestu
+    private Role role;
 }

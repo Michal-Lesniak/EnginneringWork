@@ -17,8 +17,8 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'admin', component: AdminComponent, canActivate: [AdminGuard, HasRoleGuard], data: { role: 'Admin', } },
-  { path: 'myAccount', component: MyProfileComponent, canActivate: [AdminGuard, HasRoleGuard], data: { role: 'User', } },
+  { path: 'admin', component: AdminComponent, canActivate: [AdminGuard, HasRoleGuard], data: { role: 'ROLE_ADMIN', } },
+  { path: 'myAccount', component: MyProfileComponent, canActivate: [AdminGuard, HasRoleGuard], data: { role: 'ROLE_USER', } },
 ];
 
 

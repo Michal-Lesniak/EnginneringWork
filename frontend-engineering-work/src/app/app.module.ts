@@ -25,7 +25,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MyProfileComponent } from './sites/my-profile/my-profile.component';
-import { AuthInterceptorProvider } from './security/auth.interceptor';
 import { HasRoleDirective } from './security/has-role.directive';
 
 

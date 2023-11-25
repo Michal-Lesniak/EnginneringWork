@@ -7,15 +7,30 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserService extends AbstractService<User, Long> {
 
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
-    public UserService(JpaRepository<User, Long> repository, PasswordEncoder passwordEncoder) {
+    public UserService(JpaRepository<User, Long> repository, PasswordEncoder passwordEncoder, UserRepository userRepository) {
         super(repository);
         this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+    }
+
+    public List<String> getRoles(String email){
+        User user = userRepository.findByEmail(email).orElse(null);
+        if(user != null){
+            System.out.println(Arrays.stream(user.getAuthorities().toArray()).map(Objects::toString).toList());
+            return Arrays.stream(user.getAuthorities().toArray()).map(Objects::toString).toList();
+        }
+        return Collections.emptyList();
     }
 
     public void changePassword(ChangePasswordRequest request, Principal connectedUser) {

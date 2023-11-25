@@ -10,10 +10,9 @@ import {  Router } from '@angular/router';
 })
 export class AppComponent implements OnInit{
 
-  isAdmin: boolean = false;
   isLogged: boolean = false;
 
-  constructor(private authService:AuthService, private apiService:ApiServiceService, private router:Router){}
+  constructor(public authService:AuthService, private apiService:ApiServiceService, private router:Router){}
 
   title = 'MajkiRent';
 
