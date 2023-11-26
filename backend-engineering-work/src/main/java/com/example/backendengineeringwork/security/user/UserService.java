@@ -1,5 +1,6 @@
 package com.example.backendengineeringwork.security.user;
 
+import com.example.backendengineeringwork.security.user.dto.UserProfileDto;
 import com.example.backendengineeringwork.services.AbstractService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,15 +25,6 @@ public class UserService extends AbstractService<User, Long> {
         this.userRepository = userRepository;
     }
 
-    public List<String> getRoles(String email){
-        User user = userRepository.findByEmail(email).orElse(null);
-        if(user != null){
-            System.out.println(Arrays.stream(user.getAuthorities().toArray()).map(Objects::toString).toList());
-            return Arrays.stream(user.getAuthorities().toArray()).map(Objects::toString).toList();
-        }
-        return Collections.emptyList();
-    }
-
     public void changePassword(ChangePasswordRequest request, Principal connectedUser) {
 
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
@@ -53,4 +45,12 @@ public class UserService extends AbstractService<User, Long> {
         this.save(user);
     }
 
+    public UserProfileDto getUserProfileData(String email) {
+        User user = userRepository.findByEmail(email).orElse(null);
+        if(user != null) {
+            return new UserProfileDto(user.getId(), user.getPerson(), user.getMobilePhone(), user.getEmail());
+        }else {
+            return null;
+        }
+    }
 }

@@ -10,7 +10,7 @@ export class HasRoleDirective {
   @Input()
   set appHasRole(role: string) {
 
-    if(this.authService.user?.roles.includes(role)) {
+    if(this.authService.hasRole(role)) {
       this.viewContainerRef.createEmbeddedView(this.templateRef)
     } else {
       this.viewContainerRef.clear()

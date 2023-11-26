@@ -28,7 +28,6 @@ public class SecurityConfiguration {
     private static final AntPathRequestMatcher[] WHITE_LIST_URL = {
             new AntPathRequestMatcher("/api/v1/security/**"),
             new AntPathRequestMatcher("/api/v1/auth/**"),
-            new AntPathRequestMatcher("/api/v1/users/getRoles"),
             new AntPathRequestMatcher("/api/v1/cars/**", GET.name()),
             new AntPathRequestMatcher("/api/v1/reservation/car/**", GET.name()),
             new AntPathRequestMatcher("/swagger-ui/**"),
@@ -52,6 +51,7 @@ public class SecurityConfiguration {
                         .requestMatchers(WHITE_LIST_URL)
                         .permitAll()
                         .requestMatchers("/api/v1/cars/**").hasRole(ADMIN.name())
+                        .requestMatchers("/api/v1/users/findByEmail").hasAnyRole(ADMIN.name(), USER.name())
                         .requestMatchers(GET,"/api/v1/cities/**").hasAnyRole(ADMIN.name(), USER.name())
                         .requestMatchers("/api/v1/cities/**").hasRole(ADMIN.name())
                         .requestMatchers("/api/v1/persons/**").hasAnyRole(ADMIN.name(), USER.name())

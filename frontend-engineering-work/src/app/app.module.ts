@@ -26,6 +26,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MyProfileComponent } from './sites/my-profile/my-profile.component';
 import { HasRoleDirective } from './security/has-role.directive';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { CarDetailComponent } from './sites/car-detail/car-detail.component';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { HasRoleDirective } from './security/has-role.directive';
     SocialMediaComponent,
     WhyWeSectionComponent,
     MyProfileComponent,
-    HasRoleDirective
+    HasRoleDirective,
+    NavbarComponent,
+    CarDetailComponent
   ],
   imports: [
     ToastrModule.forRoot(),

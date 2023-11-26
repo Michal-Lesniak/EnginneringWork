@@ -35,13 +35,17 @@ export class RegisterComponent {
       Validators.required,
       Validators.pattern('^\\d+-\\d+$')
     ]],
-    address: ['', Validators.required]
+    address: ['', Validators.required],
+    role: "USER"
   });
   proceedregister() {
     if (this.registerform.valid) {
       this.service.registerUser(this.registerform.value).subscribe(result => {
+        window.location.reload();
         this.toastr.success('Registered successfully')
-        this.router.navigate(['login'])
+        this.router.navigate(['login']).then(() => {
+          window.location.reload();
+        });
       });
     } else {
       this.toastr.warning('Please enter valid data.')

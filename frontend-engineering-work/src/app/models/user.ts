@@ -1,11 +1,8 @@
+import { Person } from "./person";
+
 export interface User {
-  firstname: string;
-  lastname: string;
+  id: number;
+  person: Person;
   email: string;
-  password: string;
-  borndate: string;
   mobilePhone: string;
-  city: string;
-  postcode: string;
-  address: string;
 }

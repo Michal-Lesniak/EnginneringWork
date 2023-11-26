@@ -1,1 +1,42 @@
-<p>my-profile works!</p>
+<div class="user-profile">
+  <!-- Dane użytkownika -->
+  <div class="user-data">
+    <h2>Dane Użytkownika</h2>
+    <p><strong>Imię:</strong> {{ user!.person.name  }}</p>
+    <p><strong>Nazwisko:</strong> {{ user!.person.surname }}</p>
+    <p><strong>Data urodzenia:</strong> {{ user!.person.bornDate | date  }}</p>
+    <p><strong>Miasto:</strong> {{ user!.person.city }}</p>
+    <p><strong>Kod pocztowy:</strong> {{ user!.person.postCode }}</p>
+    <p><strong>Adres:</strong> {{ user!.person.address }}</p>
+  </div>
+
+  <!-- Historia wynajmu -->
+  <div class="rental-history">
+    <h2>Historia Wynajmu</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Nazwa Samochodu</th>
+          <th>Data Wynajmu</th>
+          <th>Data Oddania</th>
+          <th>Koszt</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rental of rentals">
+          <td>{{ rental.carName }}</td>
+          <td>{{ rental.rentDate | date }}</td>
+          <td>{{ rental.returnDate | date }}</td>
+          <td>{{ rental.cost }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Dostępne akcje -->
+  <div class="actions">
+    <h2>Dostępne Akcje</h2>
+    <button (click)="changePassword()">Zmień Hasło</button>
+    <button (click)="editProfile()">Edytuj Dane Profilu</button>
+  </div>
+</div>

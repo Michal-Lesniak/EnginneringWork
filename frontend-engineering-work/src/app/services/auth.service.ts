@@ -4,6 +4,7 @@ import { BehaviorSubject, tap } from 'rxjs';
 import { ApiServiceService } from './api-service.service';
 import { UserSecurity } from '../models/user-security';
 import { TokenData } from '../models/token-data';
+import { Router } from '@angular/router';
 
 
 
@@ -14,8 +15,7 @@ import { TokenData } from '../models/token-data';
 export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();
-  token_data: TokenData | null;
-  user: UserSecurity;
+  user: UserSecurity | null;
 
   private readonly ACCESS_TOKEN_NAME = 'access_token';
   private readonly REFRESH_TOKEN_NAME = 'refresh_token';
@@ -28,36 +28,29 @@ export class AuthService {
     return localStorage.getItem(this.REFRESH_TOKEN_NAME);
   }
 
-  constructor(private apiService:ApiServiceService, private http:HttpClient) {
+  constructor(private apiService:ApiServiceService, private http:HttpClient, private router: Router) {
     this._isLoggedIn$.next(!!this.access_token);
-    this.token_data = this.getDataFromToken(this.access_token);
-    this.user = { email: this.token_data!.sub, roles: []};//sciagnac calego usera z zapytania
-    this.getRoles();
+    this.user = this.getUser(this.access_token);
     console.log(this.user);
-    console.log("1");
   }
 
-  getRolesRequest(user: UserSecurity | null){
-    return this.http.post("http://localhost:8080/api/v1/users/getRoles", user!.email);
-  }
-
-  getRoles(){
-    this.getRolesRequest(this.user).subscribe((response : any ) => {
-      this.user.roles = response;
-      console.log(this.user.roles);
-      console.log("2");
-    })
-    console.log(this.user);
-    console.log("3");
+  hasRole(role: string): boolean {
+    return this.user?.roles.includes(role) || false;
   }
 
   login(loginData: any){
     return this.apiService.loginUser(loginData).pipe(tap((response: any) => {
       this._isLoggedIn$.next(true);
-      this.getRoles();
       localStorage.setItem(this.ACCESS_TOKEN_NAME, response.access_token);
       localStorage.setItem(this.REFRESH_TOKEN_NAME, response.refresh_token);
+      this.user = this.getUser(this.access_token);
     } ));
+  }
+
+  getUserProfileData(){
+    return this.http.post("http://localhost:8080/api/v1/users/getByEmail", this.user?.email, { headers: new HttpHeaders({
+      'Authorization': 'Bearer ' + this.access_token,
+    })});
   }
 
   logout(){
@@ -65,6 +58,7 @@ export class AuthService {
       'Authorization': 'Bearer ' + this.access_token,
     })});
   }
+
 
   logoutUser(){
     return this.logout().pipe(tap((response: any) => {
@@ -74,11 +68,12 @@ export class AuthService {
     }))
   }
 
-  private getDataFromToken(token: string): TokenData | null {
+  private getUser(token: string): UserSecurity | null {
     if (!token) {
       return null
     }
-    return JSON.parse(atob(token.split('.')[1])) as TokenData;
+    const token_data = JSON.parse(atob(token.split('.')[1])) as TokenData;
+    return { email: token_data.sub, roles: token_data.roles }
   }
 
 }

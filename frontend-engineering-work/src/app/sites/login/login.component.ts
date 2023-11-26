@@ -28,7 +28,9 @@ export class LoginComponent {
     if (this.loginform.valid) {
       this.service.login(this.loginform.value).subscribe((response: any) => {
           this.toastr.success('Registered successfully');
-          this.router.navigate(['home']);
+          this.router.navigate(['home']).then(() => {
+            window.location.reload();
+          });
         });
   }
 }
