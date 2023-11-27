@@ -1,1 +1,17 @@
-<p>admin works!</p>
+<div class="admin-panel">
+  <mat-toolbar color="primary">
+    <span class="header-text">Admin Management Panel</span>
+    <span class="toolbar-spacer"></span>
+    <button mat-button (click)="selectComponent('car')">Cars</button>
+    <button mat-button (click)="selectComponent('reservation')">Reservations</button>
+    <button mat-button (click)="selectComponent('user')">Users</button>
+    <button mat-button (click)="selectComponent('city')">Cities</button>
+    <button mat-button routerLink="/home" >Home</button>
+  </mat-toolbar>
+  <div class="component-display">
+      <app-car-management *ngIf="selectedComponent === 'car'"></app-car-management>
+      <app-reservation-management *ngIf="selectedComponent === 'reservation'"></app-reservation-management>
+      <app-user-management *ngIf="selectedComponent === 'user'"></app-user-management>
+      <app-city-management *ngIf="selectedComponent === 'city'"></app-city-management>
+  </div>
+</div>

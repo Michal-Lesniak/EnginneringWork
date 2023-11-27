@@ -7,30 +7,30 @@
         justify-content: space-around;
         gap: 20px;
         padding: 20px;
-      
+
         .car-card {
           width: calc(33.333% - 20px); // dla 3 kart w rzędzie z uwzględnieniem odstępu
           display: flex;
           flex-direction: column;
           align-items: center;
-      
+
           mat-card {
             width: 100%;
             img {
               width: 100%;
               height: auto;
             }
-      
+
             .price {
               font-size: 1.5em;
               color: green; // dostosuj kolor
             }
-      
+
             .details {
               font-size: 0.8em;
               color: grey; // dostosuj kolor
             }
-      
+
             .specs {
               display: flex;
               justify-content: space-between;
@@ -38,7 +38,7 @@
                 // Styl dla specyfikacji samochodu
               }
             }
-      
+
             button {
               margin-top: 20px;
             }

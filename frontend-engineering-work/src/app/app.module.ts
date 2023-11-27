@@ -28,7 +28,14 @@ import { MyProfileComponent } from './sites/my-profile/my-profile.component';
 import { HasRoleDirective } from './security/has-role.directive';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CarDetailComponent } from './sites/car-detail/car-detail.component';
-
+import { CarManagementComponent } from './sites/admin/car-management/car-management.component';
+import { ReservationManagementComponent } from './sites/admin/reservation-management/reservation-management.component';
+import { CityManagementComponent } from './sites/admin/city-management/city-management.component';
+import { UserManagementComponent } from './sites/admin/user-management/user-management.component';
+import {MatListModule} from '@angular/material/list';
+import {MatTableModule} from '@angular/material/table';
+import {MatDialogModule} from '@angular/material/dialog';
+import { NewReservationComponent } from './sites/admin/reservation-manegement/new-reservation/new-reservation.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +52,12 @@ import { CarDetailComponent } from './sites/car-detail/car-detail.component';
     MyProfileComponent,
     HasRoleDirective,
     NavbarComponent,
-    CarDetailComponent
+    CarDetailComponent,
+    CarManagementComponent,
+    ReservationManagementComponent,
+    CityManagementComponent,
+    UserManagementComponent,
+    NewReservationComponent,
   ],
   imports: [
     ToastrModule.forRoot(),
@@ -64,7 +76,9 @@ import { CarDetailComponent } from './sites/car-detail/car-detail.component';
     MatFormFieldModule,
     MatNativeDateModule,
     MatDatepickerModule,
-  ],
+    MatListModule,
+    MatTableModule,
+    MatDialogModule  ],
   providers: [],
   bootstrap: [AppComponent],
 })

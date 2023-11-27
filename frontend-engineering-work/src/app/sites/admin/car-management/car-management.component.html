@@ -1,0 +1,148 @@
+<div class="car-container">
+  <div *ngIf="isCarEdited" class="form-container">
+    <h2>Car Specification</h2>
+    <form [formGroup]="carForm" (ngSubmit)="submitForm()" class="car-form">
+      <!-- Brand Field -->
+
+      <mat-form-field appearance="fill">
+        <mat-label>Brand</mat-label>
+        <input matInput formControlName="brand" placeholder="Brand">
+      </mat-form-field>
+
+      <!-- Production Year Field -->
+      <mat-form-field appearance="fill">
+        <mat-label>Production Year</mat-label>
+        <input matInput formControlName="productionYear" type="number" placeholder="Production Year">
+      </mat-form-field>
+
+      <!-- Rent Price Per Day Field -->
+      <mat-form-field appearance="fill">
+        <mat-label>Rent Price Per Day</mat-label>
+        <input matInput formControlName="rentPrizePerDay" type="number" placeholder="Rent Price Per Day">
+      </mat-form-field>
+
+
+      <!-- Model Fields -->
+      <div formGroupName="model">
+        <h3>Model Specification</h3>
+        <mat-form-field appearance="fill">
+          <mat-label>Model Name</mat-label>
+          <input matInput formControlName="name" placeholder="Model Name">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Type</mat-label>
+          <input matInput formControlName="type" placeholder="Type">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Seats</mat-label>
+          <input matInput formControlName="seats" placeholder="Seats">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Drive</mat-label>
+          <input matInput formControlName="drive" placeholder="Drive">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Transmission</mat-label>
+          <input matInput formControlName="transmission" placeholder="Transmission">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Top Speed</mat-label>
+          <input matInput formControlName="topSpeed" placeholder="Top Speed">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Fuel Consumption</mat-label>
+          <input matInput formControlName="fuelConsumption" placeholder="Fuel Consumption">
+        </mat-form-field>
+
+        <!-- Engine Fields -->
+        <div formGroupName="engine">
+          <h3>Engine Specification</h3>
+          <mat-form-field appearance="fill">
+            <mat-label>Engine Capacity</mat-label>
+            <input matInput formControlName="engineCapacity" type="number" placeholder="Engine Capacity">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Power</mat-label>
+            <input matInput formControlName="power" type="number" placeholder="Power">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Torque</mat-label>
+            <input matInput formControlName="torque" type="number" placeholder="Torque">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Fuel Type</mat-label>
+            <input matInput formControlName="fuel" placeholder="Fuel Type">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button mat-raised-button color="primary" type="submit" [disabled]="!carForm.valid">Add Car</button>
+    </form>
+  </div>
+  <!-- Lista samochodów -->
+  <div class="list-container">
+    <table mat-table [dataSource]="cars" class="mat-elevation-z8">
+
+      <!-- Columns definitions -->
+      <ng-container matColumnDef="brand">
+        <th mat-header-cell *matHeaderCellDef> Brand </th>
+        <td mat-cell *matCellDef="let car"> {{car.brand}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="model">
+        <th mat-header-cell *matHeaderCellDef> Model </th>
+        <td mat-cell *matCellDef="let car"> {{car.model.name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="productionYear">
+        <th mat-header-cell *matHeaderCellDef> Year </th>
+        <td mat-cell *matCellDef="let car"> {{car.productionYear}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="topSpeed">
+        <th mat-header-cell *matHeaderCellDef> Top Speed </th>
+        <td mat-cell *matCellDef="let car"> {{car.model.topSpeed}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="power">
+        <th mat-header-cell *matHeaderCellDef> Power </th>
+        <td mat-cell *matCellDef="let car"> {{car.model.engine.power}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="rentPrizePerDay">
+        <th mat-header-cell *matHeaderCellDef> PrizePerDay </th>
+        <td mat-cell *matCellDef="let car"> {{car.rentPrizePerDay}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let car">
+          <!-- Edit Button -->
+          <button mat-icon-button color="primary" (click)="editCar(car)">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <!-- Delete Button -->
+          <button mat-icon-button color="warn" (click)="deleteCar(car)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <!-- Add other columns like model, rentPrizePerDay, etc. -->
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <button mat-raised-button color="primary" (click)="addNewCar()">Add New Car</button>
+  </div>
+</div>

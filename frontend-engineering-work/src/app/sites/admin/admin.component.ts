@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent {
+  selectedComponent: string = 'car'; // domyślny wyświetlany komponent
 
+  constructor() {}
+
+  selectComponent(component: string) {
+    this.selectedComponent = component;
+  }
 }

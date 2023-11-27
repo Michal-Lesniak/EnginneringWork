@@ -10,6 +10,11 @@ import {  Router } from '@angular/router';
 })
 export class AppComponent{
 
-  constructor(){}
+  constructor(public router: Router){}
+
+
+  isPath(path: string): boolean {
+    return this.router.url === path;
+  }
 
 }

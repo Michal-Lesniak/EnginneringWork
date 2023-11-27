@@ -27,4 +27,5 @@ public class ReservationService extends AbstractService<Reservation, Long>{
         return reservationRepository.findByUserId(userId);
     }
 
+    public List<Reservation> getReservationByUserEmail(String email){ return reservationRepository.findReservationByUser_Email(email); }
 }

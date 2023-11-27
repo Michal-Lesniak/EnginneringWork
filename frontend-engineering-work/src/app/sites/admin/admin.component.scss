@@ -1,0 +1,31 @@
+.admin-panel {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  height: 100%;
+
+
+  .header-text {
+    flex: 1;
+    text-align: left;
+  }
+
+  .toolbar-spacer {
+    flex: 1 1 auto;
+  }
+
+  .styled-button {
+    background-color: #f0f0f0; // jasny szary tło
+    color: #333; // ciemnoszary tekst
+    padding: 8px 16px;
+    border-radius: 4px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2); // lekki cień
+
+    &:hover {
+      background-color: #e0e0e0; // ciemniejszy szary podczas najechania
+    }
+  }
+
+  .component-display {
+    padding: 20px;
+  }
+}

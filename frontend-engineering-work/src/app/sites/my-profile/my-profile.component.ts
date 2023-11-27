@@ -1,5 +1,6 @@
-import { JsonPipe } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
+import { Reservation } from 'src/app/models/Reservation';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -10,8 +11,9 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class MyProfileComponent implements OnInit{
 
-  rentals: any;
+  reservation: Reservation[] = [];
   user: User | null= null;
+  isEditMode: boolean = false;
 
   constructor(private authService: AuthService){
 
@@ -19,14 +21,27 @@ export class MyProfileComponent implements OnInit{
 
   ngOnInit(): void {
     this.authService.getUserProfileData().subscribe((response:any) => {
-      console.log(response);
       this.user = response;
+    });
+    this.authService.getReservationByUserEmail().subscribe((response:any) => {
+      this.reservation = response;
     });
   }
 
-  editProfile() {
-  throw new Error('Method not implemented.');
+  cancelEdit() {
+    // implement functionality
+      this.isEditMode = false;
   }
+  saveProfile() {
+    // implement functionality
+    this.isEditMode = false;
+  }
+
+  editProfile() {
+    // implement functionality
+    this.isEditMode = true;
+  }
+
   changePassword() {
   throw new Error('Method not implemented.');
   }

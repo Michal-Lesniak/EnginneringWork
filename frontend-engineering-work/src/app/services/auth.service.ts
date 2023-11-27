@@ -53,6 +53,12 @@ export class AuthService {
     })});
   }
 
+  getReservationByUserEmail(){
+    return this.http.post("http://localhost:8080/api/v1/reservations/getByEmail", this.user?.email, { headers: new HttpHeaders({
+      'Authorization': 'Bearer ' + this.access_token,
+    })});
+  }
+
   logout(){
     return this.http.post("http://localhost:8080/api/v1/auth/logout", null, { headers: new HttpHeaders({
       'Authorization': 'Bearer ' + this.access_token,
