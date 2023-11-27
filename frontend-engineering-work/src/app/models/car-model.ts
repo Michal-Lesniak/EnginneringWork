@@ -1,7 +1,7 @@
 import { Engine } from "./engine";
 
 export interface CarModel {
-  id:number,
+  id?:number,
   name:string,
   engine: Engine,
   type: string,

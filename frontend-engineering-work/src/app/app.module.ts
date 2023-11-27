@@ -35,7 +35,8 @@ import { UserManagementComponent } from './sites/admin/user-management/user-mana
 import {MatListModule} from '@angular/material/list';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
-import { NewReservationComponent } from './sites/admin/reservation-manegement/new-reservation/new-reservation.component';
+import { DialogComponent } from './components/dialog/dialog.component';
+import { NewReservationComponent } from './sites/admin/reservation-management/new-reservation/new-reservation.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { NewReservationComponent } from './sites/admin/reservation-manegement/ne
     ReservationManagementComponent,
     CityManagementComponent,
     UserManagementComponent,
+    DialogComponent,
     NewReservationComponent,
   ],
   imports: [

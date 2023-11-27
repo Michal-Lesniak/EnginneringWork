@@ -1,5 +1,4 @@
 <div class="user-profile">
-  <!-- Dane użytkownika -->
   <div *ngIf="!isEditMode" class="user-data">
     <h2>Dane Użytkownika</h2>
     <p><strong>Imię:</strong> {{ user!.person.name  }}</p>
@@ -55,9 +54,6 @@
       </div>
     </form>
   </div>
-
-
-  <!-- Historia wynajmu -->
   <div class="rental-history">
     <h2 *ngIf="reservation.length != 0">Historia Wynajmu</h2>
     <table *ngIf="reservation.length != 0">
@@ -75,7 +71,6 @@
           <td>{{ rental.rentDate | date }}</td>
           <td>{{ rental.arrivalDate | date }}</td>
           <td>800</td>
-          <!-- kwota najmu dodac do reserwacji ? -->
         </tr>
       </tbody>
     </table>
@@ -86,7 +81,4 @@
       <button mat-raised-button color="primary" routerLink="/cars">Discover Our Cars</button>
     </div>
   </div>
-
-  <!-- Dostępne akcje -->
-
 </div>

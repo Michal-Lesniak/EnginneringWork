@@ -1,10 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
-import { ApiServiceService } from './api-service.service';
 import { UserSecurity } from '../models/user-security';
 import { TokenData } from '../models/token-data';
-import { Router } from '@angular/router';
+import { LoginService } from './login.service';
 
 
 
@@ -14,7 +13,11 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
+  // private _accessToken$ = new BehaviorSubject<string>("");
+  // private _userEmail$ = new BehaviorSubject<string>("");
   isLoggedIn$ = this._isLoggedIn$.asObservable();
+  // accessToken$ = this._accessToken$.asObservable();
+  // userEmail$ = this._userEmail$.asObservable();
   user: UserSecurity | null;
 
   private readonly ACCESS_TOKEN_NAME = 'access_token';
@@ -28,10 +31,11 @@ export class AuthService {
     return localStorage.getItem(this.REFRESH_TOKEN_NAME);
   }
 
-  constructor(private apiService:ApiServiceService, private http:HttpClient, private router: Router) {
+  constructor(private loginService:LoginService, private http:HttpClient) {
     this._isLoggedIn$.next(!!this.access_token);
+    // this._accessToken$.next(this.access_token);
     this.user = this.getUser(this.access_token);
-    console.log(this.user);
+    // this._userEmail$.next(this.user!.email);
   }
 
   hasRole(role: string): boolean {
@@ -39,24 +43,14 @@ export class AuthService {
   }
 
   login(loginData: any){
-    return this.apiService.loginUser(loginData).pipe(tap((response: any) => {
+    return this.loginService.loginUser(loginData).pipe(tap((response: any) => {
       this._isLoggedIn$.next(true);
+      // this._accessToken$.next(this.access_token);
       localStorage.setItem(this.ACCESS_TOKEN_NAME, response.access_token);
       localStorage.setItem(this.REFRESH_TOKEN_NAME, response.refresh_token);
       this.user = this.getUser(this.access_token);
+      // this._userEmail$.next(this.user!.email);
     } ));
-  }
-
-  getUserProfileData(){
-    return this.http.post("http://localhost:8080/api/v1/users/getByEmail", this.user?.email, { headers: new HttpHeaders({
-      'Authorization': 'Bearer ' + this.access_token,
-    })});
-  }
-
-  getReservationByUserEmail(){
-    return this.http.post("http://localhost:8080/api/v1/reservations/getByEmail", this.user?.email, { headers: new HttpHeaders({
-      'Authorization': 'Bearer ' + this.access_token,
-    })});
   }
 
   logout(){
@@ -65,10 +59,10 @@ export class AuthService {
     })});
   }
 
-
   logoutUser(){
     return this.logout().pipe(tap((response: any) => {
       this._isLoggedIn$.next(false);
+      // this._accessToken$.next("");
       localStorage.removeItem(this.ACCESS_TOKEN_NAME);
       localStorage.removeItem(this.REFRESH_TOKEN_NAME);
     }))
@@ -81,5 +75,4 @@ export class AuthService {
     const token_data = JSON.parse(atob(token.split('.')[1])) as TokenData;
     return { email: token_data.sub, roles: token_data.roles }
   }
-
 }

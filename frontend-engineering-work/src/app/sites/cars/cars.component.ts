@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Car } from 'src/app/models/car';
-import { ApiServiceService } from 'src/app/services/api-service.service';
+import { CarService } from 'src/app/services/car.service';
 
 @Component({
   selector: 'app-cars',
@@ -11,7 +10,7 @@ export class CarsComponent implements OnInit{
 
   // cars: Car[] = [];
 
-  constructor(private apiService:ApiServiceService){
+  constructor(private carService:CarService){
 
   }
 

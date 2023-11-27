@@ -1,0 +1,17 @@
+.dialog-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  width: 100%; // Zakładam, że chcesz, aby był pełnej szerokości
+}
+
+.dialog-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 4px;
+  padding: 3px;
+  transform: scale(1.5);
+}

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiServiceService } from 'src/app/services/api-service.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -11,7 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class NavbarComponent {
   isLogged: boolean = false;
 
-  constructor(public authService:AuthService, private apiService:ApiServiceService, private router:Router){}
+  constructor(public authService:AuthService, private router:Router){}
 
   title = 'MajkiRent';
 

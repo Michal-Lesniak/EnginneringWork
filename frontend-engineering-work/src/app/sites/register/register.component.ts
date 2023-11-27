@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ApiServiceService } from 'src/app/services/api-service.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-register',
@@ -12,8 +11,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class RegisterComponent {
 
-  constructor(private builder: FormBuilder, private service: ApiServiceService, private router: Router,
-    private toastr: ToastrService) {
+  constructor(private builder: FormBuilder, private router: Router,
+    private toastr: ToastrService, private loginService:LoginService) {
 
   }
 
@@ -38,9 +37,10 @@ export class RegisterComponent {
     address: ['', Validators.required],
     role: "USER"
   });
+
   proceedregister() {
     if (this.registerform.valid) {
-      this.service.registerUser(this.registerform.value).subscribe(result => {
+      this.loginService.registerUser(this.registerform.value).subscribe(() => {
         window.location.reload();
         this.toastr.success('Registered successfully')
         this.router.navigate(['login']).then(() => {

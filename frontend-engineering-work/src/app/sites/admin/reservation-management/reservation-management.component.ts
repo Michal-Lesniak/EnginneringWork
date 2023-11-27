@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Reservation } from 'src/app/models/Reservation';
+import { ReservationAdminView } from 'src/app/models/reservation-admin-view';
+import { NewReservationComponent } from './new-reservation/new-reservation.component';
+import { Reservation } from 'src/app/models/reservation';
 
 @Component({
   selector: 'app-reservation-management',
@@ -8,7 +10,14 @@ import { Reservation } from 'src/app/models/Reservation';
   styleUrls: ['./reservation-management.component.scss']
 })
 export class ReservationManagementComponent {
-  reservation: Reservation[] = [];
+deleteReservation(arg0: any) {
+throw new Error('Method not implemented.');
+}
+editReservation(arg0: any) {
+throw new Error('Method not implemented.');
+}
+  displayedColumns: string[] = ['car', 'rentDate', 'arrivalDate', 'user', 'rentCity', 'arrivalCity', 'actions'];
+  reservations: ReservationAdminView[] = rentalData;
   selectedItem: Reservation | null = null;
   searchText = '';
   public messageStateError = false;
@@ -20,31 +29,16 @@ export class ReservationManagementComponent {
   ngOnInit() {
   }
 
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.parts = this.parts.filter(el => {
-  //     return el.name.toLowerCase().includes(filterValue);
-  //   });
-  // }
 
-  deletePart(reservation: Reservation) {
-    // this.connection.deletePart(part.partCode).subscribe((res) => {
-    //   if (res) {
-    //     this.handleMessage(false, "Pomyślnie Usunięto!");
-    //     this.getParts();
-    //     this.selectedItem = null;
-    //   }
-    // }, () => this.handleMessage(true, "Wystąpił błąd w trakcie usuwania!"))
-  };
 
   getReservation() {
     console.log('N')
   }
 
   public openDialog(): void {
-    // const newPartRef = this.dialog.open(NewPartComponent, {
-    //   backdropClass: 'backdropDialog',
-    // });
+    const newPartRef = this.dialog.open(NewReservationComponent, {
+      backdropClass: 'backdropDialog',
+    });
 
   //   newPartRef.afterClosed().subscribe(result => {
   //     this.getParts()
@@ -57,3 +51,25 @@ export class ReservationManagementComponent {
   //   });
   }
 }
+
+export const rentalData: ReservationAdminView[] = [
+  {
+    id: 1,
+    carName: 'Toyota Corolla',
+    rentDate: new Date('2023-01-01'),
+    arrivalDate: new Date('2023-01-05'),
+    userName: 'John Doe',
+    rentCity: 'New York',
+    arrivalCity: 'Washington'
+  },
+  {
+    id: 2,
+    carName: 'Honda Civic',
+    rentDate: new Date('2023-02-10'),
+    arrivalDate: new Date('2023-02-15'),
+    userName: 'Jane Smith',
+    rentCity: 'Los Angeles',
+    arrivalCity: 'San Francisco'
+  },
+  // ... Additional objects follow the same structure
+];
