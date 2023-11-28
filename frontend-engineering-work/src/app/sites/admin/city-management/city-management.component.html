@@ -1,30 +1,32 @@
 <div class="city-container">
   <table mat-table [dataSource]="cities" class="mat-elevation-z8">
 
-    <!-- Numeracja Column -->
     <ng-container matColumnDef="position">
       <th mat-header-cell *matHeaderCellDef> No. </th>
-      <td mat-cell *matCellDef="let element; let i = index;"> {{i + 1}} </td>
+      <td mat-cell *matCellDef="let city; let i = index;"> {{i + 1}} </td>
     </ng-container>
 
-    <!-- Miasto Column -->
     <ng-container matColumnDef="city">
       <th mat-header-cell *matHeaderCellDef> City </th>
-      <td mat-cell *matCellDef="let element"> {{element.city}} </td>
+      <td mat-cell *matCellDef="let city"> {{city.name}} </td>
     </ng-container>
 
-    <!-- Usuwanie Column -->
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef> Action </th>
-      <td mat-cell *matCellDef="let element">
-        <button mat-button (click)="deleteCity(element)">Usuń</button>
+      <td mat-cell *matCellDef="let city">
+        <button mat-button (click)="deleteCity(city)">Usuń</button>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="addCity">
       <td mat-footer-cell *matFooterCellDef>
-        <input [(ngModel)]="newCity" placeholder="Nazwa miasta">
-        <button mat-button (click)="addCity()">Dodaj</button>
+        <form [formGroup]="cityForm" (ngSubmit)="submitForm()" class="city-form">
+          <mat-form-field appearance="fill">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="name" placeholder="Name">
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!cityForm.valid">Add City</button>
+        </form>
       </td>
     </ng-container>
 

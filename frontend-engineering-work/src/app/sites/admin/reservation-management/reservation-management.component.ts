@@ -10,12 +10,7 @@ import { Reservation } from 'src/app/models/reservation';
   styleUrls: ['./reservation-management.component.scss']
 })
 export class ReservationManagementComponent {
-deleteReservation(arg0: any) {
-throw new Error('Method not implemented.');
-}
-editReservation(arg0: any) {
-throw new Error('Method not implemented.');
-}
+
   displayedColumns: string[] = ['car', 'rentDate', 'arrivalDate', 'user', 'rentCity', 'arrivalCity', 'actions'];
   reservations: ReservationAdminView[] = rentalData;
   selectedItem: Reservation | null = null;
@@ -30,6 +25,12 @@ throw new Error('Method not implemented.');
   }
 
 
+  deleteReservation(arg0: any) {
+    throw new Error('Method not implemented.');
+  }
+  editReservation(arg0: any) {
+    throw new Error('Method not implemented.');
+  }
 
   getReservation() {
     console.log('N')
@@ -40,15 +41,15 @@ throw new Error('Method not implemented.');
       backdropClass: 'backdropDialog',
     });
 
-  //   newPartRef.afterClosed().subscribe(result => {
-  //     this.getParts()
-  //     if(result === true){
-  //       this.handleMessage(false, "Urządzenie zostało pomyślnie dodane.")
-  //     }else if(result === false){
-  //       this.handleMessage(true, "Urządzenie o podanym kodzie już istnieje.")
-  //     }
+    //   newPartRef.afterClosed().subscribe(result => {
+    //     this.getParts()
+    //     if(result === true){
+    //       this.handleMessage(false, "Urządzenie zostało pomyślnie dodane.")
+    //     }else if(result === false){
+    //       this.handleMessage(true, "Urządzenie o podanym kodzie już istnieje.")
+    //     }
 
-  //   });
+    //   });
   }
 }
 

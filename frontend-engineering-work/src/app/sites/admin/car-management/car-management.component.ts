@@ -44,7 +44,6 @@ export class CarManagementComponent {
   submitForm() {
     if (this.carForm.valid) {
       const newCar: Car = {
-        id: Date.now(), // Tymczasowe ID
         ...this.carForm.value
       };
       this.cars.push(newCar);
