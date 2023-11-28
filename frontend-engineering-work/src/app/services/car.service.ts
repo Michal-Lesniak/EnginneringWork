@@ -11,7 +11,7 @@ export class CarService {
 
   constructor(private http:HttpClient) {}
 
-  getCars(){
+  getCarsRequest(){
     return this.http.get(this.apiurl + '/cars');
   }
 }

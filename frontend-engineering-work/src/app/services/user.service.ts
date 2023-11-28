@@ -11,9 +11,21 @@ export class UserService {
 
   constructor(private http:HttpClient, private authService:AuthService) {}
 
-  getUserProfileData(){
+  getUserProfileDataRequest(){
     return this.http.post(this.apiurl + "/users/getByEmail", this.authService.user?.email, { headers: new HttpHeaders({
-      'Authorization': 'Bearer ' + this.authService.access_token,
+      'Authorization':'Bearer ' + this.authService.access_token,
     })});
+  }
+
+  getUsersRequest(){
+    return this.http.get(this.apiurl + "/users", { headers: new HttpHeaders({
+      'Authorization':'Bearer ' + this.authService.access_token,
+    })})
+  }
+
+  deleteUserRequest(id: number){
+    return this.http.delete(this.apiurl + `/users/${id}`, { headers: new HttpHeaders({
+      'Authorization':'Bearer ' + this.authService.access_token,
+    })})
   }
 }

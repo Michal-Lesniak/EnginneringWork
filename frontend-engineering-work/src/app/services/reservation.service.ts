@@ -11,7 +11,7 @@ export class ReservationService {
 
   constructor(private http:HttpClient, private authService:AuthService) { }
 
-  getReservationByUserEmail(){
+  getReservationByUserEmailRequest(){
     return this.http.post(this.apiurl + "/reservations/getByEmail", this.authService.user?.email, { headers: new HttpHeaders({
       'Authorization': 'Bearer ' + this.authService.access_token,
     })});

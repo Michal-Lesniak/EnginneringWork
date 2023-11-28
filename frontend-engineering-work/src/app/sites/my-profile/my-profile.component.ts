@@ -20,10 +20,10 @@ export class MyProfileComponent implements OnInit{
   constructor(private userService: UserService, private reservationService: ReservationService){}
 
   ngOnInit(): void {
-    this.userService.getUserProfileData().subscribe((response:any) => {
+    this.userService.getUserProfileDataRequest().subscribe((response:any) => {
       this.user = response;
     });
-    this.reservationService.getReservationByUserEmail().subscribe((response:any) => {
+    this.reservationService.getReservationByUserEmailRequest().subscribe((response:any) => {
       this.reservation = response;
     });
   }

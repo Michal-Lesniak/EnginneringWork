@@ -8,19 +8,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
-public class UserService extends AbstractService<User, Long> {
+public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    public UserService(JpaRepository<User, Long> repository, PasswordEncoder passwordEncoder, UserRepository userRepository) {
-        super(repository);
+    public UserService( PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
     }
@@ -42,7 +38,15 @@ public class UserService extends AbstractService<User, Long> {
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
 
         // save the new password
-        this.save(user);
+        userRepository.save(user);
+    }
+
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 
     public UserProfileDto getUserProfileData(String email) {
@@ -52,5 +56,9 @@ public class UserService extends AbstractService<User, Long> {
         }else {
             return null;
         }
+    }
+    public List<UserProfileDto> getListUsersDto() {
+        List<User> userList = userRepository.findAll();
+        return userList.stream().filter((user -> user.getRole() != Role.ADMIN)).map((user) -> new UserProfileDto(user.getId(), user.getPerson(), user.getMobilePhone(), user.getEmail())).toList();
     }
 }

@@ -30,7 +30,7 @@ export class CityManagementComponent implements OnInit {
 
   deleteCity(city: City) {
     this.cityService.deleteCityRequest(city.id!).subscribe(() =>
-      this.cities = this.cities.filter(val => val !== city
+      this.cities = this.cities.filter(obj => obj !== city
       ))
   }
 

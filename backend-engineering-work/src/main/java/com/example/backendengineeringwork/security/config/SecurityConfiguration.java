@@ -52,6 +52,7 @@ public class SecurityConfiguration {
                         .permitAll()
                         .requestMatchers("/api/v1/cars/**").hasRole(ADMIN.name())
                         .requestMatchers("/api/v1/users/findByEmail").hasAnyRole(ADMIN.name(), USER.name())
+                        .requestMatchers("/api/v1/users/**").hasAnyRole(ADMIN.name())
                         .requestMatchers(GET,"/api/v1/cities/**").hasAnyRole(ADMIN.name(), USER.name())
                         .requestMatchers("/api/v1/cities/**").hasRole(ADMIN.name())
                         .requestMatchers("/api/v1/persons/**").hasAnyRole(ADMIN.name(), USER.name())
