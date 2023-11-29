@@ -1,13 +1,17 @@
 <div class="new-reservation-container">
   <form [formGroup]="rentForm">
     <mat-form-field>
-      <mat-label>ID</mat-label>
-      <input matInput formControlName="id" type="number">
+      <mat-label>User</mat-label>
+      <mat-select formControlName="userId">
+        <mat-option *ngFor="let user of data.users" [value]="user.id">{{ user.person.name + " " + user.person.surname }}</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Car ID</mat-label>
-      <input matInput formControlName="carId" type="number">
+      <mat-label>Car</mat-label>
+      <mat-select formControlName="carId">
+        <mat-option *ngFor="let car of data.cars" [value]="car.id">{{ car.brand + " " + car.model.name }}</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field>
@@ -25,18 +29,17 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>User ID</mat-label>
-      <input matInput formControlName="userId" type="number">
-    </mat-form-field>
-
-    <mat-form-field>
       <mat-label>Rent City</mat-label>
-      <input matInput formControlName="rentCity">
+      <mat-select formControlName="rentCityId">
+        <mat-option *ngFor="let city of data.cities" [value]="city.id">{{ city.name }}</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Arrival City</mat-label>
-      <input matInput formControlName="arrivalCity">
+      <mat-select formControlName="arrivalCityId">
+        <mat-option *ngFor="let city of data.cities" [value]="city.id">{{ city.name }}</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <button mat-raised-button color="primary" (click)="submitForm()">Submit</button>

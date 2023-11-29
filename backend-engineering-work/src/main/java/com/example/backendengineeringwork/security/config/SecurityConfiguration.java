@@ -18,6 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import static com.example.backendengineeringwork.security.user.Role.ADMIN;
 import static com.example.backendengineeringwork.security.user.Role.USER;
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.PUT;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -51,13 +52,14 @@ public class SecurityConfiguration {
                         .requestMatchers(WHITE_LIST_URL)
                         .permitAll()
                         .requestMatchers("/api/v1/cars/**").hasRole(ADMIN.name())
-                        .requestMatchers("/api/v1/users/findByEmail").hasAnyRole(ADMIN.name(), USER.name())
-                        .requestMatchers("/api/v1/users/**").hasAnyRole(ADMIN.name())
+                        .requestMatchers("/api/v1/users/getByEmail").hasAnyRole(ADMIN.name(), USER.name())
+                        .requestMatchers(PUT, "/api/v1/users/**").hasAnyRole(ADMIN.name(), USER.name())
+                        .requestMatchers("/api/v1/users/**").hasRole(ADMIN.name())
                         .requestMatchers(GET,"/api/v1/cities/**").hasAnyRole(ADMIN.name(), USER.name())
                         .requestMatchers("/api/v1/cities/**").hasRole(ADMIN.name())
                         .requestMatchers("/api/v1/persons/**").hasAnyRole(ADMIN.name(), USER.name())
-                        .requestMatchers("/api/v1/reservation/**").hasRole(ADMIN.name())
-                        .requestMatchers("/api/v1/reservation/byUserEmail").hasAnyRole(ADMIN.name(), USER.name() )
+                        .requestMatchers("/api/v1/reservations/**").hasRole(ADMIN.name())
+                        .requestMatchers("/api/v1/reservations/getbyEmail").hasAnyRole(ADMIN.name(), USER.name() )
                         .anyRequest()
                         .authenticated()
                 )

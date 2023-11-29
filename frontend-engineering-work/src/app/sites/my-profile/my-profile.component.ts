@@ -1,7 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { Reservation } from 'src/app/models/reservation';
-import { User } from 'src/app/models/user';
+import { UserProfile } from 'src/app/models/user-profile';
 import { ReservationService } from 'src/app/services/reservation.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -13,32 +12,31 @@ import { UserService } from 'src/app/services/user.service';
 
 export class MyProfileComponent implements OnInit{
 
-  reservation: Reservation[] = [];
-  user: User | null= null;
+  userProfile!: UserProfile;
+  editedUserProfile!: UserProfile;
   isEditMode: boolean = false;
 
   constructor(private userService: UserService, private reservationService: ReservationService){}
 
   ngOnInit(): void {
     this.userService.getUserProfileDataRequest().subscribe((response:any) => {
-      this.user = response;
-    });
-    this.reservationService.getReservationByUserEmailRequest().subscribe((response:any) => {
-      this.reservation = response;
+      this.userProfile = response;
     });
   }
 
   cancelEdit() {
-    // implement functionality
       this.isEditMode = false;
   }
   saveProfile() {
-    // implement functionality
-    this.isEditMode = false;
+    this.userService.editUserProfileRequest(this.editedUserProfile).subscribe((response:any) =>{
+      console.log(response);
+      this.userProfile = response;
+      this.isEditMode = false;
+    });
   }
 
   editProfile() {
-    // implement functionality
+    this.editedUserProfile = this.userProfile;
     this.isEditMode = true;
   }
 

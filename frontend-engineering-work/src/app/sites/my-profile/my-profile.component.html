@@ -1,14 +1,14 @@
 <div class="user-profile">
   <div *ngIf="!isEditMode" class="user-data">
     <h2>Dane Użytkownika</h2>
-    <p><strong>Imię:</strong> {{ user!.person.name  }}</p>
-    <p><strong>Nazwisko:</strong> {{ user!.person.surname }}</p>
-    <p><strong>Email:</strong> {{ user!.email }}</p>
-    <p><strong>Phone:</strong> {{ user!.mobilePhone }}</p>
-    <p><strong>Data urodzenia:</strong> {{ user!.person.bornDate | date  }}</p>
-    <p><strong>Miasto:</strong> {{ user!.person.city }}</p>
-    <p><strong>Kod pocztowy:</strong> {{ user!.person.postCode }}</p>
-    <p><strong>Adres:</strong> {{ user!.person.address }}</p>
+    <p><strong>Imię:</strong> {{ userProfile!.person.name  }}</p>
+    <p><strong>Nazwisko:</strong> {{ userProfile!.person.surname }}</p>
+    <p><strong>Email:</strong> {{ userProfile!.email }}</p>
+    <p><strong>Phone:</strong> {{ userProfile!.mobilePhone }}</p>
+    <p><strong>Data urodzenia:</strong> {{ userProfile!.person.bornDate | date  }}</p>
+    <p><strong>Miasto:</strong> {{ userProfile!.person.city }}</p>
+    <p><strong>Kod pocztowy:</strong> {{ userProfile!.person.postCode }}</p>
+    <p><strong>Adres:</strong> {{ userProfile!.person.address }}</p>
     <div *ngIf="!isEditMode" class="actions">
       <button mat-raised-button color="primary" (click)="changePassword()">Zmień Hasło</button>
       <button mat-raised-button color="primary"  (click)="editProfile()">Edytuj Dane Profilu</button>
@@ -18,35 +18,35 @@
     <form>
       <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
-        <input matInput [(ngModel)]="user!.person.name" name="name">
+        <input matInput [(ngModel)]="editedUserProfile!.person.name" name="name">
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Lastname</mat-label>
-        <input matInput [(ngModel)]="user!.person.surname" name="surname">
+        <input matInput [(ngModel)]="editedUserProfile!.person.surname" name="surname">
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
-        <input matInput [(ngModel)]="user!.email" name="email">
+        <input matInput [(ngModel)]="editedUserProfile!.email" name="email">
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Phone</mat-label>
-        <input matInput [(ngModel)]="user!.mobilePhone" name="mobilePhone">
+        <input matInput [(ngModel)]="editedUserProfile!.mobilePhone" name="mobilePhone">
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Born Date</mat-label>
-        <input matInput [(ngModel)]="user!.person.bornDate" name="bornDate">
+        <input matInput [(ngModel)]="editedUserProfile!.person.bornDate" name="bornDate">
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>City</mat-label>
-        <input matInput [(ngModel)]="user!.person.city" name="city">
+        <input matInput [(ngModel)]="editedUserProfile!.person.city" name="city">
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Post Code</mat-label>
-        <input matInput [(ngModel)]="user!.person.postCode" name="postCode">
+        <input matInput [(ngModel)]="editedUserProfile!.person.postCode" name="postCode">
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Address</mat-label>
-        <input matInput [(ngModel)]="user!.person.address" name="address">
+        <input matInput [(ngModel)]="editedUserProfile!.person.address" name="address">
       </mat-form-field>
       <div class="button-container">
           <button mat-raised-button color="primary" (click)="saveProfile()">Save</button>
@@ -55,8 +55,8 @@
     </form>
   </div>
   <div class="rental-history">
-    <h2 *ngIf="reservation.length != 0">Historia Wynajmu</h2>
-    <table *ngIf="reservation.length != 0">
+    <h2 *ngIf="userProfile.reservationViewList.length != 0">Historia Wynajmu</h2>
+    <table *ngIf="userProfile.reservationViewList.length != 0">
       <thead>
         <tr>
           <th>Nazwa Samochodu</th>
@@ -66,15 +66,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let rental of reservation">
-          <td>{{ rental.car.brand + rental.car.model.name }}</td>
-          <td>{{ rental.rentDate | date }}</td>
-          <td>{{ rental.arrivalDate | date }}</td>
-          <td>800</td>
+        <tr *ngFor="let reservation of userProfile.reservationViewList">
+          <td>{{ reservation.carName }}</td>
+          <td>{{ reservation.rentDate | date }}</td>
+          <td>{{ reservation.arrivalDate | date }}</td>
+          <td>{{ reservation.costOfRent }}</td>
         </tr>
       </tbody>
     </table>
-    <div *ngIf="reservation.length ==0" class="no-reservation">
+    <div *ngIf="userProfile.reservationViewList.length ==0" class="no-reservation">
       <h3>Ready for an extraordinary drive?</h3>
       <h3>Experience the thrill of our luxury and sports cars,
          designed for those who demand elegance and power on the road. Click below and elevate your journey with our exclusive fleet today!</h3>

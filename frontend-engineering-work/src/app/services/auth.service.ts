@@ -13,29 +13,23 @@ import { LoginService } from './login.service';
 })
 export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
-  // private _accessToken$ = new BehaviorSubject<string>("");
-  // private _userEmail$ = new BehaviorSubject<string>("");
   isLoggedIn$ = this._isLoggedIn$.asObservable();
-  // accessToken$ = this._accessToken$.asObservable();
-  // userEmail$ = this._userEmail$.asObservable();
   user: UserSecurity | null;
 
   private readonly ACCESS_TOKEN_NAME = 'access_token';
   private readonly REFRESH_TOKEN_NAME = 'refresh_token';
 
   get access_token():any {
-    return localStorage.getItem(this.ACCESS_TOKEN_NAME);
+    return sessionStorage.getItem(this.ACCESS_TOKEN_NAME);
   }
 
   get refresh_token():any {
-    return localStorage.getItem(this.REFRESH_TOKEN_NAME);
+    return sessionStorage.getItem(this.REFRESH_TOKEN_NAME);
   }
 
   constructor(private loginService:LoginService, private http:HttpClient) {
     this._isLoggedIn$.next(!!this.access_token);
-    // this._accessToken$.next(this.access_token);
     this.user = this.getUser(this.access_token);
-    // this._userEmail$.next(this.user!.email);
   }
 
   hasRole(role: string): boolean {
@@ -45,11 +39,9 @@ export class AuthService {
   login(loginData: any){
     return this.loginService.loginUser(loginData).pipe(tap((response: any) => {
       this._isLoggedIn$.next(true);
-      // this._accessToken$.next(this.access_token);
-      localStorage.setItem(this.ACCESS_TOKEN_NAME, response.access_token);
-      localStorage.setItem(this.REFRESH_TOKEN_NAME, response.refresh_token);
+      sessionStorage.setItem(this.ACCESS_TOKEN_NAME, response.access_token);
+      sessionStorage.setItem(this.REFRESH_TOKEN_NAME, response.refresh_token);
       this.user = this.getUser(this.access_token);
-      // this._userEmail$.next(this.user!.email);
     } ));
   }
 
@@ -62,9 +54,8 @@ export class AuthService {
   logoutUser(){
     return this.logout().pipe(tap((response: any) => {
       this._isLoggedIn$.next(false);
-      // this._accessToken$.next("");
-      localStorage.removeItem(this.ACCESS_TOKEN_NAME);
-      localStorage.removeItem(this.REFRESH_TOKEN_NAME);
+      sessionStorage.removeItem(this.ACCESS_TOKEN_NAME);
+      sessionStorage.removeItem(this.REFRESH_TOKEN_NAME);
     }))
   }
 

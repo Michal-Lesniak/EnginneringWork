@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Car } from 'src/app/models/car';
 import { CarModel } from 'src/app/models/car-model';
 import { Engine } from 'src/app/models/engine';
+import { CarService } from 'src/app/services/car.service';
 
 @Component({
   selector: 'app-car-management',
@@ -10,16 +11,18 @@ import { Engine } from 'src/app/models/engine';
   styleUrls: ['./car-management.component.scss']
 })
 export class CarManagementComponent {
-
-  cars: Car[] = cars; // Lista samochodów
+  cars!: Car[]; // Lista samochodów
   carForm!: FormGroup; // Formularz dla samochodu
+  isFormVisible: boolean = false;
   isCarEdited: boolean = false;
   displayedColumns: string[] = ['brand', 'model', 'productionYear', 'topSpeed', 'power', 'rentPrizePerDay', 'actions'];
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private carService:CarService) {}
 
   ngOnInit(): void {
+    this.getAllCars();
     this.carForm = this.formBuilder.group({
+      id: [''],
       brand: ['', Validators.required],
       rentPrizePerDay: ['', [Validators.required, Validators.min(0)]],
       productionYear: ['', [Validators.required, Validators.min(1900)]],
@@ -43,85 +46,68 @@ export class CarManagementComponent {
 
   submitForm() {
     if (this.carForm.valid) {
-      const newCar: Car = {
+      const car: Car = {
         ...this.carForm.value
       };
-      this.cars.push(newCar);
+      if(this.isCarEdited){
+        this.editCar(car);
+      }else{
+        this.addNewCar(car);
+      }
       this.carForm.reset();
+      this.closeForm();
     }
   }
 
-  addNewCar() {
+  openForm() {
+    this.isFormVisible = true;
+  }
+
+  closeForm() {
+    this.isFormVisible = false;
+    this.isCarEdited = false;
+  }
+
+
+  getAllCars(){
+    this.carService.getCarsRequest().subscribe((response: any) => {
+      this.cars = response;
+    })
+  }
+
+  addNewCar(newCar:Car) {
+    this.carService.addCarRequest(newCar).subscribe((response:any) => {
+      const car = response;
+      this.cars = [...this.cars, car];
+    })
+  }
+
+  editCar(editedCar:Car){
+    this.carService.editCarRequest(editedCar).subscribe((response:any) => {
+      const car = response;
+      this.cars = [ ...this.cars.filter(obj => obj.id !== editedCar.id), car];
+    })
+  }
+
+  editCarAction(car: Car) {
+    this.carForm.patchValue(car);
+    this.isFormVisible = true;
     this.isCarEdited = true;
   }
 
-  editCar(car: Car) {
-    // Logika edycji samochodu
+  deleteCar(car:Car) {
+    this.carService.deleteCarRequest(car.id!).subscribe(() =>
+    this.cars = this.cars.filter(obj => obj !== car
+    ))
   }
 
-  deleteCar(carId: number) {
-    this.cars = this.cars.filter(c => c.id !== carId);
-    // Logika usuwania samochodu z serwisu
+  showImagesCar(car:Car) {
+    throw new Error('Method not implemented.');
   }
 
+  addImage(car:Car) {
+    throw new Error('Method not implemented.');
+  }
 
 }
-
-
-const engine1: Engine = {
-  id: 1,
-  engineCapacity: 2000,
-  power: 150,
-  torque: 200,
-  fuel: 'Petrol'
-};
-
-const engine2: Engine = {
-  id: 2,
-  engineCapacity: 3000,
-  power: 250,
-  torque: 300,
-  fuel: 'Diesel'
-};
-
-const carModel1: CarModel = {
-  id: 1,
-  name: 'Model S',
-  engine: engine1,
-  type: 'Sedan',
-  seats: '5',
-  drive: 'RWD',
-  transmission: 'Automatic',
-  topSpeed: '250km/h',
-  fuelConsumption: '8l/100km'
-};
-
-const carModel2: CarModel = {
-  id: 2,
-  name: 'Model X',
-  engine: engine2,
-  type: 'SUV',
-  seats: '7',
-  drive: 'AWD',
-  transmission: 'Automatic',
-  topSpeed: '220km/h',
-  fuelConsumption: '10l/100km'
-};
-
-const cars: Car[] = [
-  {
-    id: 1,
-    brand: 'Tesla',
-    rentPrizePerDay: 500,
-    model: carModel1,
-    productionYear: 2020
-  },
-  {
-    id: 2,
-    brand: 'Tesla',
-    rentPrizePerDay: 700,
-    model: carModel2,
-    productionYear: 2021
-  }
-];
 

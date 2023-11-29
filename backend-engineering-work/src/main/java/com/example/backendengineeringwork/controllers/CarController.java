@@ -14,17 +14,10 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/cars")
-public class CarController {
-
-    @Autowired
-    CarService carService;
+public class CarController extends AbstractController<Car, Long> {
 
     public CarController(CarService service){
+        super(service);
     }
 
-
-    @GetMapping
-    public ResponseEntity<List<Car>> getAll() {
-        return ResponseEntity.ok(carService.findAll());
-    }
 }

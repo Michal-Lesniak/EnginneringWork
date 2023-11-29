@@ -36,6 +36,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DialogComponent } from './components/dialog/dialog.component';
+import {MatSelectModule} from '@angular/material/select';
 import { NewReservationComponent } from './sites/admin/reservation-management/new-reservation/new-reservation.component';
 
 @NgModule({
@@ -80,7 +81,8 @@ import { NewReservationComponent } from './sites/admin/reservation-management/ne
     MatDatepickerModule,
     MatListModule,
     MatTableModule,
-    MatDialogModule  ],
+    MatDialogModule,
+    MatSelectModule  ],
   providers: [],
   bootstrap: [AppComponent],
 })

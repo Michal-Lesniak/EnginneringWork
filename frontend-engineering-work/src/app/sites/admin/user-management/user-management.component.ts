@@ -20,12 +20,9 @@ export class UserManagementComponent implements OnInit {
     })
   }
 
-
   deleteUser(user: User) {
     this.userService.deleteUserRequest(user.id!).subscribe(() => {
       this.users = this.users.filter(obj => obj !== user);
     })
   }
-
-
 }

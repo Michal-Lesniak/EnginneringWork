@@ -2,6 +2,7 @@ package com.example.backendengineeringwork.security.user;
 
 import com.example.backendengineeringwork.controllers.AbstractController;
 import com.example.backendengineeringwork.security.user.User;
+import com.example.backendengineeringwork.security.user.dto.UserDto;
 import com.example.backendengineeringwork.security.user.dto.UserProfileDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserProfileDto>> getUsers() {
-        List<UserProfileDto> listUserDto = userService.getListUsersDto();
-        System.out.println(listUserDto);
+    public ResponseEntity<List<UserDto>> getUsers() {
+        List<UserDto> listUserDto = userService.getListUsersDto();
         return ResponseEntity.ok().body(listUserDto);
     }
 
@@ -43,6 +43,14 @@ public class UserController {
         if (userService.findById(id).isPresent()) {
             userService.deleteById(id);
             return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserProfileDto> editUserProfileData(@RequestBody UserProfileDto editedUserProfile){
+        if (userService.findById(editedUserProfile.id()).isPresent()) {
+            return ResponseEntity.ok().body(userService.editUserProfileData(editedUserProfile));
         }
         return ResponseEntity.notFound().build();
     }

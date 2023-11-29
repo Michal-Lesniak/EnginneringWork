@@ -3,7 +3,6 @@ package com.example.backendengineeringwork.controllers;
 import com.example.backendengineeringwork.dto.ImageCar.RequestUploadImageCarDto;
 import com.example.backendengineeringwork.models.ImageCar;
 import com.example.backendengineeringwork.services.ImageCarService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,8 +11,11 @@ import java.io.IOException;
 @RestController
 @RequestMapping("api/v1/image")
 public class ImageCarController {
-    @Autowired
-    private ImageCarService imageCarService;
+    private final ImageCarService imageCarService;
+
+    public ImageCarController(ImageCarService imageCarService) {
+        this.imageCarService = imageCarService;
+    }
 
     @PostMapping("/upload")
     public ResponseEntity<ImageCar> uploadImage(@RequestParam("carImage") RequestUploadImageCarDto uploadCarImageData) throws IOException {

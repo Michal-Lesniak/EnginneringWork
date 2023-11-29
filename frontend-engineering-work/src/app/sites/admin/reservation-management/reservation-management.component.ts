@@ -1,8 +1,15 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ReservationAdminView } from 'src/app/models/reservation-admin-view';
 import { NewReservationComponent } from './new-reservation/new-reservation.component';
 import { Reservation } from 'src/app/models/reservation';
+import { ReservationService } from 'src/app/services/reservation.service';
+import { CarService } from 'src/app/services/car.service';
+import { UserService } from 'src/app/services/user.service';
+import { CityService } from 'src/app/services/city.service';
+import { Car } from 'src/app/models/car';
+import { User } from 'src/app/models/user';
+import { City } from 'src/app/models/city';
+
 
 @Component({
   selector: 'app-reservation-management',
@@ -10,67 +17,76 @@ import { Reservation } from 'src/app/models/reservation';
   styleUrls: ['./reservation-management.component.scss']
 })
 export class ReservationManagementComponent {
+  displayedColumns: string[] = ['user', 'car', 'rentDate', 'arrivalDate', 'rentCity', 'arrivalCity', 'actions'];
+  reservations!: Reservation[];
+  cars!: Car[];
+  users!: User[];
+  cities!: City[]
 
-  displayedColumns: string[] = ['car', 'rentDate', 'arrivalDate', 'user', 'rentCity', 'arrivalCity', 'actions'];
-  reservations: ReservationAdminView[] = rentalData;
-  selectedItem: Reservation | null = null;
-  searchText = '';
-  public messageStateError = false;
-  public messageStateComplete = false;
-  public message = "";
+  constructor(private dialog: MatDialog,
+     private reservationService:ReservationService,
+     private carService:CarService,
+     private userService:UserService,
+     private cityService:CityService) { }
 
-  constructor(private dialog: MatDialog) { }
-
-  ngOnInit() {
+  ngOnInit(): void {
+    this.carService.getCarsRequest().subscribe((response:any) => {
+      this.cars = response;
+    });
+    this.userService.getUsersRequest().subscribe((response:any) => {
+      this.users = response;
+    });
+    this.cityService.getAllCitiesRequest().subscribe((response:any) => {
+      this.cities = response;
+    })
+    this.getAllReservations();
   }
 
-
-  deleteReservation(arg0: any) {
-    throw new Error('Method not implemented.');
-  }
-  editReservation(arg0: any) {
-    throw new Error('Method not implemented.');
+  getAllReservations(){
+    this.reservationService.getReservationsRequest().subscribe((response: any) => {
+    this.reservations = response;
+    })
   }
 
-  getReservation() {
-    console.log('N')
+  deleteReservation(reservation:Reservation) {
+    this.reservationService.deleteReservationRequest(reservation.id!).subscribe(() =>
+    this.reservations = this.reservations.filter(obj => obj !== reservation
+    ))
   }
 
-  public openDialog(): void {
-    const newPartRef = this.dialog.open(NewReservationComponent, {
+  public openDialog(reservation: Reservation | null): void {
+    const newReservationRef = this.dialog.open(NewReservationComponent, {
+      data: {
+        reservations: this.reservations,
+        reservation: reservation,
+        cities: this.cities,
+        cars: this.cars,
+        users: this.users
+       },
       backdropClass: 'backdropDialog',
     });
 
-    //   newPartRef.afterClosed().subscribe(result => {
-    //     this.getParts()
-    //     if(result === true){
-    //       this.handleMessage(false, "Urządzenie zostało pomyślnie dodane.")
-    //     }else if(result === false){
-    //       this.handleMessage(true, "Urządzenie o podanym kodzie już istnieje.")
-    //     }
+    newReservationRef.afterClosed().subscribe(reservations => {
+      this.reservations = [...reservations];
+    });
+  }
 
-    //   });
+  editReservationAction(reservation: Reservation) {
+    this.openDialog(reservation);
+  }
+
+  getUserNameById(id:number): string {
+    const user = this.users.find(user => user.id === id);
+    return user?.person.name + " " + user?.person.surname;
+  }
+
+  getCarNameById(id:number): string {
+    const car = this.cars.find(car => car.id === id);
+    return car?.brand + " " + car?.model.name;
+  }
+
+  getCityNameById(id:number): string {
+    const city = this.cities.find(city => city.id === id);
+    return city!.name;
   }
 }
-
-export const rentalData: ReservationAdminView[] = [
-  {
-    id: 1,
-    carName: 'Toyota Corolla',
-    rentDate: new Date('2023-01-01'),
-    arrivalDate: new Date('2023-01-05'),
-    userName: 'John Doe',
-    rentCity: 'New York',
-    arrivalCity: 'Washington'
-  },
-  {
-    id: 2,
-    carName: 'Honda Civic',
-    rentDate: new Date('2023-02-10'),
-    arrivalDate: new Date('2023-02-15'),
-    userName: 'Jane Smith',
-    rentCity: 'Los Angeles',
-    arrivalCity: 'San Francisco'
-  },
-  // ... Additional objects follow the same structure
-];

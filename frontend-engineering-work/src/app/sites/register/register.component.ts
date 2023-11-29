@@ -24,13 +24,13 @@ export class RegisterComponent {
       Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')
     ]],
     email: ['', [Validators.required, Validators.email]],
-    borndate: ['', Validators.required],
+    bornDate: ['', Validators.required],
     mobilePhone: ['', [
       Validators.required,
       Validators.pattern('^\\+?[1-9]\\d{1,14}$')
     ]],
     city: ['', Validators.required],
-    postcode: ['', [
+    postCode: ['', [
       Validators.required,
       Validators.pattern('^\\d+-\\d+$')
     ]],

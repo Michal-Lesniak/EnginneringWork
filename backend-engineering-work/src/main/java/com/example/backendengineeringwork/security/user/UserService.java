@@ -1,8 +1,9 @@
 package com.example.backendengineeringwork.security.user;
 
+import com.example.backendengineeringwork.dto.Reservation.ReservationViewDto;
+import com.example.backendengineeringwork.security.user.dto.UserDto;
 import com.example.backendengineeringwork.security.user.dto.UserProfileDto;
-import com.example.backendengineeringwork.services.AbstractService;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.backendengineeringwork.services.ReservationService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,12 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final ReservationService reservationService;
 
-    public UserService( PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository, ReservationService reservationService) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.reservationService = reservationService;
     }
 
     public void changePassword(ChangePasswordRequest request, Principal connectedUser) {
@@ -49,16 +52,34 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    public UserProfileDto editUserProfileData(UserProfileDto editedUserProfile) {
+        User userFromDb = userRepository.getReferenceById(editedUserProfile.id());
+        User user = new User(
+                editedUserProfile.id(),
+                editedUserProfile.person(),
+                editedUserProfile.mobilePhone(),
+                editedUserProfile.email(),
+                userFromDb.getPassword(),
+                userFromDb.getRole(),
+                userFromDb.getTokens());
+        return mapToUserProfileDto(userRepository.save(user));
+    }
+
     public UserProfileDto getUserProfileData(String email) {
         User user = userRepository.findByEmail(email).orElse(null);
         if(user != null) {
-            return new UserProfileDto(user.getId(), user.getPerson(), user.getMobilePhone(), user.getEmail());
+            return mapToUserProfileDto(user);
         }else {
             return null;
         }
     }
-    public List<UserProfileDto> getListUsersDto() {
+    public List<UserDto> getListUsersDto() {
         List<User> userList = userRepository.findAll();
-        return userList.stream().filter((user -> user.getRole() != Role.ADMIN)).map((user) -> new UserProfileDto(user.getId(), user.getPerson(), user.getMobilePhone(), user.getEmail())).toList();
+        return userList.stream().filter((user -> user.getRole() != Role.ADMIN)).map((user) -> new UserDto(user.getId(), user.getPerson(), user.getMobilePhone(), user.getEmail())).toList();
+    }
+
+    private UserProfileDto mapToUserProfileDto(User user){
+        List<ReservationViewDto> reservationViewList = reservationService.getReservationByUserEmail(user.getEmail());
+        return new UserProfileDto(user.getId(), user.getPerson(), user.getMobilePhone(), user.getEmail(), reservationViewList);
     }
 }
