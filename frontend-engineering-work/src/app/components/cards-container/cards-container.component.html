@@ -8,10 +8,10 @@
         <mat-card-header>
           <mat-card-title>{{ car.name }}</mat-card-title>
         </mat-card-header>
-        <img mat-card-image [src]="car.imageUrl" alt="{{ car.name }}">
+        <img mat-card-image [src]="convertPath(car.imageCarList[0].filePath)" alt="{{ car.name }}">
         <mat-card-content>
-          <p>Max Speed: {{ car.maxSpeed }} km/h</p>
-          <p>Price per day: {{ car.pricePerDay }} $</p>
+          <p>{{ car.power }}KM / {{car.torque}} Nm</p>
+          <p>Price per day: {{ car.rentPrizePerDay }} $</p>
         </mat-card-content>
       </mat-card>
     </div>

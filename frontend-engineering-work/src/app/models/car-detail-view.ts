@@ -8,5 +8,5 @@ export interface CarDetailView {
   model: CarModel,
   productionYear: number,
   bookedDays: Date[],
-  imagePath?: ImageCar[],
+  imageCarList: ImageCar[],
 }

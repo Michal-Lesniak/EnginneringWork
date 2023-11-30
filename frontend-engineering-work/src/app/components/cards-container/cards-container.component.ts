@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CarPreview } from 'src/app/models/car-preview';
+import { ImageCar } from 'src/app/models/image-car';
+import { CarService } from 'src/app/services/car.service';
 
 interface Car {
   name: string;
@@ -14,33 +17,32 @@ interface Car {
   styleUrls: ['./cards-container.component.scss']
 })
 
-export class CardsContainerComponent {
-
-  constructor(private router:Router){}
-
-  cars: any[] = [
-    { id: 3, name: 'Car 1', imageUrl: '../assets/911.jpeg', maxSpeed: 220, pricePerDay: 100 },
-    { name: 'Car 2', imageUrl: '../assets/BMW-M3-Competition-8-600x338.jpg', maxSpeed: 240, pricePerDay: 150 },
-    { name: 'Car 3', imageUrl: '../assets/bmw-m5.jpeg', maxSpeed: 280, pricePerDay: 2000 },
-    { name: 'Car 4', imageUrl: '../assets/ferrari.jpg', maxSpeed: 340, pricePerDay: 2500 },
-    { name: 'Car 5', imageUrl: '../assets/merc-G-classa.jpeg', maxSpeed: 180, pricePerDay: 500 },
-    { name: 'Car 6', imageUrl: '../assets/LAMBORGHINI-URUS-8-1-600x338.jpeg', maxSpeed: 275, pricePerDay: 1500 },
-    { name: 'Car 7', imageUrl: '../assets/porsche-taycan.jpeg', maxSpeed: 310, pricePerDay: 1900 },
-    { name: 'Car 8', imageUrl: '../assets/rsq7.jpg', maxSpeed: 240, pricePerDay: 1150 },
-  ];
-
-  // The index of the first visible card
+export class CardsContainerComponent implements OnInit{
+  cars: CarPreview[] = [];
   firstCardIndex = 0;
 
+  constructor(private router:Router, private carService:CarService){}
+
+  ngOnInit(): void {
+    this.carService.getCarsListRequest().subscribe((response: any ) => {
+      console.log(response);
+      this.cars = response.slice(0,8);
+      this.cars.forEach(car => {
+        if(car.imageCarList.length === 0){
+          const imageCar: ImageCar = {filePath: '../assets/default.jpg', fileName: 'default'};
+          car.imageCarList.push(imageCar);
+        }
+      })
+    });
+  }
+
   showNext() {
-    // Increase index to show next set of cards
     if (this.firstCardIndex < this.cars.length - 4) {
       this.firstCardIndex++;
     }
   }
 
   showPrev() {
-    // Decrease index to show previous set of cards
     if (this.firstCardIndex > 0) {
       this.firstCardIndex--;
     }
@@ -48,5 +50,11 @@ export class CardsContainerComponent {
 
   navigateToDetails(car: any) {
     this.router.navigate([`cars/${car.name.replace(/ /g, '-')}`], {state: { carId: car.id}});
+  }
+
+  convertPath(path:string): string{
+    const parts = path.split('\\');
+    const assetsIndex = parts.indexOf('assets');
+    return ['..'].concat(parts.slice(assetsIndex)).join('\\');
   }
 }

@@ -48,7 +48,12 @@ public class ImageCarService {
         return new ResponseImageCarDto(imageCar.getId(), imageCar.getName(), imageCar.getPath());
     }
 
-    public void deleteImage(Long id) {
+    public void deleteImage(Long id) throws IOException {
+        ImageCar imageCar = imageCarRepository.getReferenceById(id);
+        Path path = Paths.get(imageCar.getPath());
+        if (Files.exists(path)) {
+            Files.delete(path);
+        }
         imageCarRepository.deleteById(id);
     }
 

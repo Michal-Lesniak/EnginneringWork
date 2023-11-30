@@ -21,6 +21,11 @@
               height: auto;
             }
 
+            .car-name{
+              margin-top: 20px;
+              font-weight: 800;
+            }
+
             .price {
               font-size: 1.5em;
               color: green; // dostosuj kolor
@@ -33,10 +38,21 @@
 
             .specs {
               display: flex;
-              justify-content: space-between;
-              p {
-                // Styl dla specyfikacji samochodu
-              }
+              justify-content: space-around;
+
+                &__box{
+                  display: flex;
+                  flex-direction: row;
+                  .icon{
+                    width: 20px;
+                    height: 20px;
+                  }
+
+                  p{
+                    margin-left: 5px;
+                  }
+                }
+
             }
 
             button {

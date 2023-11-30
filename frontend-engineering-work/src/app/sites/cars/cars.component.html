@@ -4,14 +4,26 @@
           <mat-card>
             <img mat-card-image [src]="convertPath(car.imageCarList[0].filePath)" alt="{{ car.name }}">
             <mat-card-content>
-              <h3>{{ car.name  }}</h3>
+              <h3 class="car-name">{{ car.name  }}</h3>
               <p class="price">from {{ car.rentPrizePerDay }} $</p>
               <p class="details">price/day for min 30 days</p>
               <div class="specs">
-                <p>{{ car.acceleration }}</p>
-                <p>{{ car.transmission }}</p>
-                <p>{{ car.power }}</p>
-                <p>{{ car.seats }}</p>
+                <div class="specs__box">
+                  <img src="../../../assets/power.png" alt="" class="icon">
+                  <p>{{ car.power }} KM</p>
+                </div>
+                <div class="specs__box">
+                  <img src="../../../assets/torque.png" alt="" class="icon">
+                  <p>{{ car.torque }} Nm</p>
+                </div>
+                <div class="specs__box">
+                  <img src="../../../assets/acceleration.png" alt="" class="icon">
+                  <p>{{ car.acceleration }} s</p>
+                </div>
+                <div class="specs__box">
+                  <img src="../../../assets/seats.png" alt="" class="icon">
+                  <p>{{ car.seats }}</p>
+                </div>
               </div>
               <button mat-raised-button color="primary" (click)="navigateToDetails(car)">Details</button>
             </mat-card-content>

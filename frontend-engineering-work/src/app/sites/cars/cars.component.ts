@@ -22,7 +22,7 @@ export class CarsComponent implements OnInit{
       this.cars = response;
       this.cars.forEach(car => {
         if(car.imageCarList.length === 0){
-          const imageCar: ImageCar = {filePath: '../assets/LAMBORGHINI-URUS-8-1-600x338.jpeg', fileName: 'default'};
+          const imageCar: ImageCar = {filePath: '../assets/default.jpg', fileName: 'default'};
           car.imageCarList.push(imageCar);
         }
       })

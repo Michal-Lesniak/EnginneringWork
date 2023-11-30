@@ -2,9 +2,7 @@
   <div class="car-specification-container">
     <div class="car-specification-body">
       <div class="car-image">
-        <!-- Main image display -->
-        {{carData.imagePath}}
-        <img [src]="carData.imagePath" alt="carData.brand +  ' ' + carData.model.name" class="main-image">
+        <img [src]="convertPath(carData.imageCarList[0].filePath)" alt="" class="main-image">
       </div>
       <div class="car-description">
         <h2>Rent a Car Right Now!</h2>

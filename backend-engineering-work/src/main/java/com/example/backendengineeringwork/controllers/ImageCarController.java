@@ -27,7 +27,7 @@ public class ImageCarController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteImage(@PathVariable("id") Long id){
+    public ResponseEntity deleteImage(@PathVariable("id") Long id) throws IOException {
         imageCarService.deleteImage(id);
         if(imageCarService.existImageById(id)){
             return ResponseEntity.noContent().build();
