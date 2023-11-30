@@ -9,9 +9,9 @@
     <button mat-button routerLink="/home" >Home</button>
   </mat-toolbar>
   <div class="component-display">
-      <app-car-management *ngIf="selectedComponent === 'car'"></app-car-management>
-      <app-reservation-management *ngIf="selectedComponent === 'reservation'"></app-reservation-management>
-      <app-user-management *ngIf="selectedComponent === 'user'"></app-user-management>
-      <app-city-management *ngIf="selectedComponent === 'city'"></app-city-management>
+      <app-car-management *ngIf="selectedComponent === 'car'" [(cars)]="cars"></app-car-management>
+      <app-reservation-management *ngIf="selectedComponent === 'reservation'" [(reservations)]="reservations" [users]="users" [cars]="cars" [cities]="cities"></app-reservation-management>
+      <app-user-management *ngIf="selectedComponent === 'user'" [(users)]="users"></app-user-management>
+      <app-city-management *ngIf="selectedComponent === 'city'" [(cities)]="cities"></app-city-management>
   </div>
 </div>

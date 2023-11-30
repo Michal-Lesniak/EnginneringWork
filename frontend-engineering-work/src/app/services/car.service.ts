@@ -17,6 +17,10 @@ export class CarService {
     return this.http.get(this.apiurl + '/cars');
   }
 
+  getCarsListRequest(){
+    return this.http.get(this.apiurl + '/cars/list');
+  }
+
   getCarDetailsRequest(id: number ){
     return this.http.get(this.apiurl + `/cars/details/${id}`);
   }

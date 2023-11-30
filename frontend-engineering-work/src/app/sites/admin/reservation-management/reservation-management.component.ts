@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NewReservationComponent } from './new-reservation/new-reservation.component';
 import { Reservation } from 'src/app/models/reservation';
@@ -8,7 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 import { CityService } from 'src/app/services/city.service';
 import { Car } from 'src/app/models/car';
 import { User } from 'src/app/models/user';
-import { City } from 'src/app/models/city';
+import { City } from 'src/app/models/city';;
 
 
 @Component({
@@ -18,35 +18,15 @@ import { City } from 'src/app/models/city';
 })
 export class ReservationManagementComponent {
   displayedColumns: string[] = ['user', 'car', 'rentDate', 'arrivalDate', 'rentCity', 'arrivalCity', 'actions'];
-  reservations!: Reservation[];
-  cars!: Car[];
-  users!: User[];
-  cities!: City[]
+  @Input() reservations!: Reservation[];
+  @Output() reservationsChange = new EventEmitter<Reservation[]>();
+  @Input() cars!: Car[];
+  @Input() users!: User[];
+  @Input() cities!: City[]
 
   constructor(private dialog: MatDialog,
-     private reservationService:ReservationService,
-     private carService:CarService,
-     private userService:UserService,
-     private cityService:CityService) { }
+     private reservationService:ReservationService) { }
 
-  ngOnInit(): void {
-    this.carService.getCarsRequest().subscribe((response:any) => {
-      this.cars = response;
-    });
-    this.userService.getUsersRequest().subscribe((response:any) => {
-      this.users = response;
-    });
-    this.cityService.getAllCitiesRequest().subscribe((response:any) => {
-      this.cities = response;
-    })
-    this.getAllReservations();
-  }
-
-  getAllReservations(){
-    this.reservationService.getReservationsRequest().subscribe((response: any) => {
-    this.reservations = response;
-    })
-  }
 
   deleteReservation(reservation:Reservation) {
     this.reservationService.deleteReservationRequest(reservation.id!).subscribe(() =>
@@ -68,6 +48,7 @@ export class ReservationManagementComponent {
 
     newReservationRef.afterClosed().subscribe(reservations => {
       this.reservations = [...reservations];
+      this.reservationsChange.emit(this.reservations);
     });
   }
 

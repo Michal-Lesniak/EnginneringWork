@@ -138,7 +138,9 @@
             <mat-icon>delete</mat-icon>
           </button>
 
-          <button mat-icon-button color="primary" (click)="addImage(car)">
+          <input type="file" class="file-input"
+                (change)="onFileSelected(car.id, $event)" #fileUpload>
+          <button mat-icon-button color="primary"  (click)="fileUpload.click()">
             <mat-icon>add_photo_alternate</mat-icon>
           </button>
 

@@ -26,10 +26,10 @@
         </mat-select>
       </mat-form-field>
     </form>
-    <h3>Cena za dzien: {{costPerDay}} $</h3>
+    <h3>Price per day: {{costPerDay}} $</h3>
   </div>
   <div>
-    <h2>Calkowita Kwota do zaplaty: {{ costPerDay * daysOfRent}} $ </h2>
-    <button mat-raised-button (click)="submitForm()" [disabled]="!this.rentForm.valid" color="primary">Zarezerwuj!</button>
+    <h2>Total Amount to Pay: {{ costPerDay * daysOfRent}} $ </h2>
+    <button mat-raised-button (click)="submitForm()" [disabled]="!this.rentForm.valid" color="primary">Reserve!</button>
   </div>
 </div>

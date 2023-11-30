@@ -56,6 +56,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/v1/users/**").hasRole(ADMIN.name())
                         .requestMatchers(GET,"/api/v1/cities/**").hasAnyRole(ADMIN.name(), USER.name())
                         .requestMatchers("/api/v1/cities/**").hasRole(ADMIN.name())
+                        .requestMatchers("/api/v1/images/**").hasRole(ADMIN.name())
                         .requestMatchers("/api/v1/persons/**").hasAnyRole(ADMIN.name(), USER.name())
                         .requestMatchers(POST,"/api/v1/reservations/**").hasAnyRole(ADMIN.name(), USER.name())
                         .requestMatchers("/api/v1/reservations/**").hasRole(ADMIN.name())

@@ -1,10 +1,13 @@
 package com.example.backendengineeringwork.controllers;
 
 import com.example.backendengineeringwork.dto.car.CarDetails;
+import com.example.backendengineeringwork.dto.car.CarPreview;
 import com.example.backendengineeringwork.models.Car;
 import com.example.backendengineeringwork.services.CarService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -25,5 +28,11 @@ public class CarController extends AbstractController<Car, Long> {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<CarPreview>> getAllCars() {
+        return ResponseEntity.ok().body(carService.getAllCars());
+    }
+
 
 }

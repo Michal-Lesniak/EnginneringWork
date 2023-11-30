@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { City } from 'src/app/models/city';
 import { CityService } from 'src/app/services/city.service';
@@ -10,7 +10,8 @@ import { CityService } from 'src/app/services/city.service';
 })
 export class CityManagementComponent implements OnInit {
   displayedColumns: string[] = ['position', 'city', 'delete'];
-  cities: City[] = [];
+  @Input() cities: City[] = [];
+  @Output() citiesChange = new EventEmitter<City[]>();
   cityForm!: FormGroup;
 
   constructor(private cityService:CityService, private formBuilder:FormBuilder){}
@@ -19,19 +20,13 @@ export class CityManagementComponent implements OnInit {
     this.cityForm = this.formBuilder.group({
       name: ['', Validators.required],
     })
-    this.getAllCities();
-  }
-
-  getAllCities(){
-    this.cityService.getAllCitiesRequest().subscribe((response: any) => {
-      this.cities = response;
-    })
   }
 
   deleteCity(city: City) {
     this.cityService.deleteCityRequest(city.id!).subscribe(() =>
       this.cities = this.cities.filter(obj => obj !== city
-      ))
+      ));
+      this.citiesChange.emit(this.cities);
   }
 
   submitForm() {
@@ -48,6 +43,7 @@ export class CityManagementComponent implements OnInit {
     this.cityService.addCityRequest(newCity).subscribe((response:any) => {
       const city = response;
       this.cities = [...this.cities, city];
+      this.citiesChange.emit(this.cities);
     })
   }
 }

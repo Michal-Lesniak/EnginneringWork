@@ -2,18 +2,18 @@
     <div class="cars-list">
         <div class="car-card" *ngFor="let car of cars">
           <mat-card>
-            <img mat-card-image [src]="car.imageUrl" alt="{{ car.name }}">
+            <img mat-card-image [src]="convertPath(car.imageCarList[0].filePath)" alt="{{ car.name }}">
             <mat-card-content>
-              <h3>{{ car.name }}</h3>
-              <p class="price">od {{ car.price }} zł</p>
-              <p class="details">cena netto/doba przy min 30 dniach</p>
+              <h3>{{ car.name  }}</h3>
+              <p class="price">from {{ car.rentPrizePerDay }} $</p>
+              <p class="details">price/day for min 30 days</p>
               <div class="specs">
                 <p>{{ car.acceleration }}</p>
-                <p>{{ car.gearbox }}</p>
+                <p>{{ car.transmission }}</p>
                 <p>{{ car.power }}</p>
                 <p>{{ car.seats }}</p>
               </div>
-              <button mat-raised-button color="primary" (click)="navigateToDetails(car)">Szczegóły</button>
+              <button mat-raised-button color="primary" (click)="navigateToDetails(car)">Details</button>
             </mat-card-content>
           </mat-card>
         </div>

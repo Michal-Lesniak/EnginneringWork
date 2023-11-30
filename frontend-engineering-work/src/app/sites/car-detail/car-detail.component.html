@@ -3,22 +3,23 @@
     <div class="car-specification-body">
       <div class="car-image">
         <!-- Main image display -->
-        <img src="../assets/LAMBORGHINI-URUS-8-1-600x338.jpeg" alt="carData.brand +  ' ' + carData.model.name" class="main-image">
+        {{carData.imagePath}}
+        <img [src]="carData.imagePath" alt="carData.brand +  ' ' + carData.model.name" class="main-image">
       </div>
       <div class="car-description">
-        <h2>Wynajmij Samochod juz teraz!</h2>
-        <h1>Wynajem {{carData.brand + " " + carData.model.name}}</h1>
-        <h3>Ocena klientow 5/5</h3>
+        <h2>Rent a Car Right Now!</h2>
+        <h1>Rental {{carData.brand + " " + carData.model.name}}</h1>
+        <h3>Customer rating 5/5</h3>
       </div>
     </div>
     <mat-divider></mat-divider>
     <div class="specification-container">
-      <h2>Specyfikacja - {{carData.brand + " " + carData.model.name}}</h2>
+      <h2>Specification - {{carData.brand + " " + carData.model.name}}</h2>
       <app-specification-grid [carData]="carData"></app-specification-grid>
     </div>
     <mat-divider></mat-divider>
     <div *ngIf="isLogged" class="car-availability-container">
-      <h2>Dostepnosc - {{carData.brand + " " + carData.model.name}}</h2>
+      <h2>Availability - {{carData.brand + " " + carData.model.name}}</h2>
       <app-car-reservation [blockedDates]="carData.bookedDays" [costPerDay]="carData.rentPrizePerDay" [cities]="cities" (submitEvent)="addReservation($event)"></app-car-reservation>
     </div>
     <div *ngIf="!isLogged" class="login-required">

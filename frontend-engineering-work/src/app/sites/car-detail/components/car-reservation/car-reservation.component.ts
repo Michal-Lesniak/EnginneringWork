@@ -7,7 +7,7 @@ import { City } from 'src/app/models/city';
   templateUrl: './car-reservation.component.html',
   styleUrls: ['./car-reservation.component.scss']
 })
-export class CarReservationComponent implements OnInit {
+export class CarReservationComponent {
   @Input() blockedDates!: Date[];
   @Input() costPerDay!: number;
   @Input() cities!:City[];
@@ -41,9 +41,6 @@ export class CarReservationComponent implements OnInit {
     return this.amountOfDaysBetween(start, end);
   }
 
-  ngOnInit(): void {
-    console.log(this.blockedDates)
-  }
 
   myFilter = (): boolean => {
     const day = new Date();
