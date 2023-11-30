@@ -1,17 +1,19 @@
 <div class="user-profile">
   <div *ngIf="!isEditMode" class="user-data">
-    <h2>Dane Użytkownika</h2>
-    <p><strong>Imię:</strong> {{ userProfile!.person.name  }}</p>
-    <p><strong>Nazwisko:</strong> {{ userProfile!.person.surname }}</p>
-    <p><strong>Email:</strong> {{ userProfile!.email }}</p>
-    <p><strong>Phone:</strong> {{ userProfile!.mobilePhone }}</p>
-    <p><strong>Data urodzenia:</strong> {{ userProfile!.person.bornDate | date  }}</p>
-    <p><strong>Miasto:</strong> {{ userProfile!.person.city }}</p>
-    <p><strong>Kod pocztowy:</strong> {{ userProfile!.person.postCode }}</p>
-    <p><strong>Adres:</strong> {{ userProfile!.person.address }}</p>
+    <div class="user-data-info">
+      <h2>Dane Użytkownika</h2>
+      <p><strong>Imię:</strong> {{ userProfile!.person.name }}</p>
+      <p><strong>Nazwisko:</strong> {{ userProfile!.person.surname }}</p>
+      <p><strong>Email:</strong> {{ userProfile!.email }}</p>
+      <p><strong>Phone:</strong> {{ userProfile!.mobilePhone }}</p>
+      <p><strong>Data urodzenia:</strong> {{ userProfile!.person.bornDate | date }}</p>
+      <p><strong>Miasto:</strong> {{ userProfile!.person.city }}</p>
+      <p><strong>Kod pocztowy:</strong> {{ userProfile!.person.postCode }}</p>
+      <p><strong>Adres:</strong> {{ userProfile!.person.address }}</p>
+    </div>
     <div *ngIf="!isEditMode" class="actions">
       <button mat-raised-button color="primary" (click)="changePassword()">Zmień Hasło</button>
-      <button mat-raised-button color="primary"  (click)="editProfile()">Edytuj Dane Profilu</button>
+      <button mat-raised-button color="primary" (click)="editProfile()">Edytuj Dane Profilu</button>
     </div>
   </div>
   <div *ngIf="isEditMode" class="user-data-form">
@@ -49,8 +51,8 @@
         <input matInput [(ngModel)]="editedUserProfile!.person.address" name="address">
       </mat-form-field>
       <div class="button-container">
-          <button mat-raised-button color="primary" (click)="saveProfile()">Save</button>
-          <button mat-raised-button (click)="cancelEdit()" type="button">Cancel</button>
+        <button mat-raised-button color="primary" (click)="saveProfile()">Save</button>
+        <button mat-raised-button (click)="cancelEdit()" type="button">Cancel</button>
       </div>
     </form>
   </div>
@@ -77,7 +79,8 @@
     <div *ngIf="userProfile.reservationViewList.length ==0" class="no-reservation">
       <h3>Ready for an extraordinary drive?</h3>
       <h3>Experience the thrill of our luxury and sports cars,
-         designed for those who demand elegance and power on the road. Click below and elevate your journey with our exclusive fleet today!</h3>
+        designed for those who demand elegance and power on the road. Click below and elevate your journey with our
+        exclusive fleet today!</h3>
       <button mat-raised-button color="primary" routerLink="/cars">Discover Our Cars</button>
     </div>
   </div>

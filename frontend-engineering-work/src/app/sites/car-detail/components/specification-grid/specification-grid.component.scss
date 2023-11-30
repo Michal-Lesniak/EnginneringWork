@@ -1,0 +1,38 @@
+.spec-cards-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: space-around;
+  gap: 10px;
+  margin: 0 20px;
+}
+
+.spec-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  padding: 0px 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+mat-icon {
+  padding-right: 10px;
+}
+.spec-details{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.spec-details h3 {
+  padding-top: 5px;
+  margin: 0;
+  text-align: left;
+  font-size: 1em;
+}
+
+.spec-details p {
+  font-weight: bold;
+  text-align: left;
+}
+

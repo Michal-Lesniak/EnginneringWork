@@ -1,0 +1,25 @@
+.car-reservation-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: end;
+  padding: 20px;
+
+  h3{
+    padding-top: 30px;
+  }
+
+  form{
+    display: flex;
+    flex-direction: column;
+
+    mat-form-field{
+      margin-top: 10px;
+    }
+  }
+
+  button{
+    float: right;
+    padding: 5px 20px;
+  }
+}

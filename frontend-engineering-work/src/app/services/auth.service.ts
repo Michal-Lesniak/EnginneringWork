@@ -23,6 +23,10 @@ export class AuthService {
     return sessionStorage.getItem(this.ACCESS_TOKEN_NAME);
   }
 
+  get user_id():number {
+    return this.user!.userId;
+  }
+
   get refresh_token():any {
     return sessionStorage.getItem(this.REFRESH_TOKEN_NAME);
   }
@@ -30,6 +34,7 @@ export class AuthService {
   constructor(private loginService:LoginService, private http:HttpClient) {
     this._isLoggedIn$.next(!!this.access_token);
     this.user = this.getUser(this.access_token);
+
   }
 
   hasRole(role: string): boolean {
@@ -64,6 +69,6 @@ export class AuthService {
       return null
     }
     const token_data = JSON.parse(atob(token.split('.')[1])) as TokenData;
-    return { email: token_data.sub, roles: token_data.roles }
+    return { userId: token_data.userId,  email: token_data.sub, roles: token_data.roles }
   }
 }

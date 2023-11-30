@@ -16,13 +16,27 @@
 .user-data {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
   flex-basis: 0;
   width: 300px;
 
+  .user-data-info{
+    h2{
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    p{
+      margin: 10px;
+      font-size: 18px;
+    }
+  }
+
   .actions{
-    margin-top: 40px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    margin: 10px;
   }
 }
 

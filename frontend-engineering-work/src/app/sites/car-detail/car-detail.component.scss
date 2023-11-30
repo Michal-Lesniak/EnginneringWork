@@ -1,0 +1,88 @@
+.container{
+  display: flex;
+  padding-top: 80px;
+  justify-content: center;
+  background-color: rgba(96, 96, 96, 0.1);
+  min-height: 100vh;
+}
+
+.car-specification-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 40px;
+  max-width: 1600px;
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+
+  mat-divider{
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  h2{
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: black;
+  }
+}
+
+.car-specification-body {
+  display: flex;
+  padding: 20px;
+
+  .car-image {
+    width: 50%;
+    .main-image {
+      width: 100%;
+      height: auto;
+      border-bottom: 1px solid #ddd;
+    }
+  }
+
+  .car-description{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    justify-content: center;
+
+    h1{
+      text-align: center;
+    }
+
+    h3{
+      color: white;
+      padding: 5px;
+      border-radius: 5px;
+      background-color: rgb(63, 81, 181);
+      text-align: center;
+    }
+  }
+}
+
+.specification-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+
+  h2{
+    padding-left: 10px;
+  }
+}
+
+.car-availability-container{
+  padding: 20px;
+}
+
+.login-required{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px;
+  font-weight: bold;
+}
+
+

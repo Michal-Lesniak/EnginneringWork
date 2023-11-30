@@ -1,0 +1,35 @@
+<div class="car-reservation-container">
+  <div>
+    <form [formGroup]="rentForm">
+      <mat-form-field>
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker" formGroupName="dateRange" [dateFilter]="myFilter">
+          <input matStartDate formControlName="rentDate" placeholder="Start date">
+          <input matEndDate formControlName="arrivalDate" placeholder="End date">
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Rent City</mat-label>
+        <mat-select formControlName="rentCityId">
+          <mat-option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Arrival City</mat-label>
+        <mat-select formControlName="arrivalCityId">
+          <mat-option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+    <h3>Cena za dzien: {{costPerDay}} $</h3>
+  </div>
+  <div>
+    <h2>Calkowita Kwota do zaplaty: {{ costPerDay * daysOfRent}} $ </h2>
+    <button mat-raised-button (click)="submitForm()" [disabled]="!this.rentForm.valid" color="primary">Zarezerwuj!</button>
+  </div>
+</div>

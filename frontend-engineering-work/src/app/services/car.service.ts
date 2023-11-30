@@ -17,6 +17,10 @@ export class CarService {
     return this.http.get(this.apiurl + '/cars');
   }
 
+  getCarDetailsRequest(id: number ){
+    return this.http.get(this.apiurl + `/cars/details/${id}`);
+  }
+
   addCarRequest(newCar: Car) {
     return this.http.post(this.apiurl + '/cars', newCar, {headers: new HttpHeaders({
       'Authorization' : "Bearer " + this.authService.access_token,

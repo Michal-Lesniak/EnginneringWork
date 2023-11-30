@@ -38,6 +38,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { DialogComponent } from './components/dialog/dialog.component';
 import {MatSelectModule} from '@angular/material/select';
 import { NewReservationComponent } from './sites/admin/reservation-management/new-reservation/new-reservation.component';
+import { SpecificationGridComponent } from './sites/car-detail/components/specification-grid/specification-grid.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { CarReservationComponent } from './sites/car-detail/components/car-reservation/car-reservation.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +64,8 @@ import { NewReservationComponent } from './sites/admin/reservation-management/ne
     UserManagementComponent,
     DialogComponent,
     NewReservationComponent,
+    SpecificationGridComponent,
+    CarReservationComponent,
   ],
   imports: [
     ToastrModule.forRoot(),
@@ -82,7 +87,8 @@ import { NewReservationComponent } from './sites/admin/reservation-management/ne
     MatListModule,
     MatTableModule,
     MatDialogModule,
-    MatSelectModule  ],
+    MatSelectModule,
+    MatGridListModule  ],
   providers: [],
   bootstrap: [AppComponent],
 })

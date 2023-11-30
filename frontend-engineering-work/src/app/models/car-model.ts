@@ -10,4 +10,5 @@ export interface CarModel {
   transmission: string,
   topSpeed: string,
   fuelConsumption: string
+  acceleration: number;
 }

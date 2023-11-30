@@ -1,0 +1,79 @@
+<div class="spec-cards-container">
+      <mat-card class="spec-card">
+        <mat-icon>speed</mat-icon>
+        <div class="spec-details">
+          <h3>Moc</h3>
+          <p>{{carData.model.engine.power}} KM</p>
+        </div>
+      </mat-card>
+      <mat-card class="spec-card">
+        <mat-icon>build </mat-icon>
+        <div class="spec-details">
+          <h3>Moment Obrotowy</h3>
+          <p>{{carData.model.engine.torque}} Nm</p>
+        </div>
+      </mat-card>
+      <mat-card class="spec-card">
+        <mat-icon>event_seat</mat-icon>
+        <div class="spec-details">
+          <h3>Liczba miejsc</h3>
+          <p>{{carData.model.seats}}</p>
+        </div>
+      </mat-card>
+      <mat-card class="spec-card">
+        <mat-icon>directions_car </mat-icon>
+        <div class="spec-details">
+          <h3>Spalanie</h3>
+          <p>{{carData.model.fuelConsumption}} l/100km</p>
+        </div>
+      </mat-card>
+      <mat-card class="spec-card">
+        <div class="spec-details">
+          <h3>Typ samochodu</h3>
+          <p>{{carData.model.type}}</p>
+        </div>
+      </mat-card>
+      <mat-card class="spec-card">
+        <div class="spec-details">
+          <h3>Przyśpieszenie</h3>
+          <p>{{carData.model.acceleration}} do 100km/h</p>
+        </div>
+      </mat-card>
+      <mat-card class="spec-card">
+        <div class="spec-details">
+          <h3>Maksymalna prędkość</h3>
+          <p>{{carData.model.topSpeed}} km/h</p>
+        </div>
+      </mat-card>
+      <mat-card class="spec-card">
+        <div class="spec-details">
+          <h3>Pojemność silnika</h3>
+          <p>{{carData.model.engine.engineCapacity}}</p>
+        </div>
+      </mat-card>
+      <mat-card class="spec-card">
+        <div class="spec-details">
+          <h3>Skrzynia biegów</h3>
+          <p>{{carData.model.transmission}}</p>
+        </div>
+      </mat-card>
+      <mat-card class="spec-card">
+        <div class="spec-details">
+          <h3>Rodzaj paliwa</h3>
+          <p>{{carData.model.engine.fuel}}</p>
+        </div>
+      </mat-card>
+      <mat-card class="spec-card">
+        <div class="spec-details">
+          <h3>Rok produkcji</h3>
+          <p>{{carData.productionYear}}</p>
+        </div>
+      </mat-card>
+      <mat-card class="spec-card">
+        <div class="spec-details">
+          <h3>Napęd</h3>
+          <p>{{carData.model.drive}}</p>
+        </div>
+      </mat-card>
+  <!-- Repeat for other cards -->
+</div>

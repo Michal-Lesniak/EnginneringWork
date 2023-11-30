@@ -51,6 +51,7 @@ public class AuthenticationService {
                 .build();
         Map<String, Object> claims = new HashMap<>();
         claims.put("roles", Arrays.stream(user.getAuthorities().toArray()).map(Objects::toString).toList());
+        claims.put("userId", user.getId());
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(claims, user);
         var refreshToken = jwtService.generateRefreshToken(user);
@@ -72,6 +73,7 @@ public class AuthenticationService {
                 .orElseThrow();
         Map<String, Object> claims = new HashMap<>();
         claims.put("roles", Arrays.stream(user.getAuthorities().toArray()).map(Objects::toString).toList());
+        claims.put("userId", user.getId());
         var jwtToken = jwtService.generateToken(claims, user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
@@ -122,6 +124,7 @@ public class AuthenticationService {
             if (jwtService.isTokenValid(refreshToken, user)) {
                 Map<String, Object> claims = new HashMap<>();
                 claims.put("roles", Arrays.stream(user.getAuthorities().toArray()).map(Objects::toString).toList());
+                claims.put("userId", user.getId());
                 var accessToken = jwtService.generateToken(claims, user);
                 revokeAllUserTokens(user);
                 saveUserToken(user, accessToken);

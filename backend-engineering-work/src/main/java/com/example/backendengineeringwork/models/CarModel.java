@@ -42,6 +42,9 @@ public class CarModel {
     private Integer topSpeed;
 
     @NotNull
+    private Double acceleration;
+
+    @NotNull
     @DecimalMin(value = "0")
     private Double fuelConsumption;
 }

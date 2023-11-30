@@ -13,7 +13,7 @@
                 <p>{{ car.power }}</p>
                 <p>{{ car.seats }}</p>
               </div>
-              <button mat-raised-button color="primary">Szczegóły</button>
+              <button mat-raised-button color="primary" (click)="navigateToDetails(car)">Szczegóły</button>
             </mat-card-content>
           </mat-card>
         </div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Car } from 'src/app/models/car';
 import { CarService } from 'src/app/services/car.service';
 
 @Component({
@@ -7,10 +9,9 @@ import { CarService } from 'src/app/services/car.service';
   styleUrls: ['./cars.component.scss']
 })
 export class CarsComponent implements OnInit{
-
   // cars: Car[] = [];
 
-  constructor(private carService:CarService){
+  constructor(private carService:CarService, private router: Router){
 
   }
 
@@ -21,9 +22,13 @@ export class CarsComponent implements OnInit{
     // });
   }
 
+  navigateToDetails(car: any) {
+    this.router.navigate([`/cars/${car.name.replace(/ /g, '-')}`], { state: { carId: car.id}});
+  }
 
   cars = [
     {
+      id: 2,
       name: 'Lamborghini Huracán EVO',
       imageUrl: '../assets/LAMBORGHINI-URUS-8-1-600x338.jpeg',
       price: '1500',
@@ -33,6 +38,7 @@ export class CarsComponent implements OnInit{
       seats: '2'
     },
     {
+      id:3,
       name: 'Lamborghini Huracán EVO',
       imageUrl: '../assets/rsq7.jpg',
       price: '1500',
