@@ -18,7 +18,6 @@ export class CarsComponent implements OnInit{
 
   ngOnInit(): void {
     this.carService.getCarsListRequest().subscribe((response: any ) => {
-      console.log(response);
       this.cars = response;
       this.cars.forEach(car => {
         if(car.imageCarList.length === 0){

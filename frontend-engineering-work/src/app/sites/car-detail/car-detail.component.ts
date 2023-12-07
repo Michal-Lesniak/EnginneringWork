@@ -29,7 +29,9 @@ export class CarDetailComponent implements OnInit{
     private reservationService: ReservationService){
     this.authService.isLoggedIn$.subscribe(val => this.isLogged = val);
     this.carId = (this.router.getCurrentNavigation()!.extras.state!['carId']);
-    this.userId = authService.user_id;
+    if(this.isLogged){
+      this.userId = authService.user_id;
+    }
   }
 
   ngOnInit(): void {

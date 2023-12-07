@@ -29,6 +29,7 @@ public class SecurityConfiguration {
             new AntPathRequestMatcher("/api/v1/security/**"),
             new AntPathRequestMatcher("/api/v1/auth/**"),
             new AntPathRequestMatcher("/api/v1/cars/**", GET.name()),
+            new AntPathRequestMatcher("/api/v1/cars/list/**", GET.name()),
             new AntPathRequestMatcher("/api/v1/reservation/car/**", GET.name()),
             new AntPathRequestMatcher("/swagger-ui/**"),
             new AntPathRequestMatcher("/swagger-resources/**"),
