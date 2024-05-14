@@ -1,14 +1,16 @@
 package com.example.backendengineeringwork.security.auth;
 
 
+import com.example.backendengineeringwork.commands.user.RegisterUserCommand;
 import com.example.backendengineeringwork.models.Person;
-import com.example.backendengineeringwork.security.config.JwtService;
+import com.example.backendengineeringwork.security.JwtService;
+import com.example.backendengineeringwork.security.dtos.AuthenticationRequest;
+import com.example.backendengineeringwork.security.dtos.AuthenticationResponse;
 import com.example.backendengineeringwork.security.token.Token;
 import com.example.backendengineeringwork.security.token.TokenRepository;
 import com.example.backendengineeringwork.security.token.TokenType;
-import com.example.backendengineeringwork.security.user.Role;
-import com.example.backendengineeringwork.security.user.User;
-import com.example.backendengineeringwork.security.user.UserRepository;
+import com.example.backendengineeringwork.models.User;
+import com.example.backendengineeringwork.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -34,7 +36,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterUserCommand request) {
         var user = User.builder()
                 .person(Person.builder()
                         .name(request.getFirstname())
@@ -109,7 +111,7 @@ public class AuthenticationService {
     public void refreshToken(
             HttpServletRequest request,
             HttpServletResponse response
-    ) throws IOException {
+    ) {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String refreshToken;
         final String userEmail;
@@ -132,7 +134,11 @@ public class AuthenticationService {
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
                         .build();
-                new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+                try {
+                    new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

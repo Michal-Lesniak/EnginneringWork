@@ -1,5 +1,6 @@
 package com.example.backendengineeringwork.security.config;
 
+import com.example.backendengineeringwork.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +16,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import static com.example.backendengineeringwork.security.user.Role.ADMIN;
-import static com.example.backendengineeringwork.security.user.Role.USER;
+import static com.example.backendengineeringwork.models.Role.ADMIN;
+import static com.example.backendengineeringwork.models.Role.USER;
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 

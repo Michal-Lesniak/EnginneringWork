@@ -1,32 +1,42 @@
 package com.example.backendengineeringwork.models;
 
-import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.Cascade;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
-import java.util.Set;
-import java.util.UUID;
 
 
-@Entity
-@Data
+
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Setter
+@Builder
+@Entity
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @NotBlank
     private String brand;
 
     @NotNull
-    private Integer rentPrizePerDay;
+    private int rentPrizePerDay;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JoinColumn(name = "model_id")
     private CarModel model;
 

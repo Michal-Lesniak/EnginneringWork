@@ -1,107 +1,129 @@
 package com.example.backendengineeringwork.services;
 
-import com.example.backendengineeringwork.dto.Reservation.ReservationDto;
-import com.example.backendengineeringwork.dto.Reservation.ReservationViewDto;
+import com.example.backendengineeringwork.commands.reservation.CreateReservationCommand;
+import com.example.backendengineeringwork.dtos.reservation.ReservationDto;
+import com.example.backendengineeringwork.dtos.reservation.ReservationViewDto;
+import com.example.backendengineeringwork.mappers.ReservationMapper;
 import com.example.backendengineeringwork.models.Car;
 import com.example.backendengineeringwork.models.City;
 import com.example.backendengineeringwork.models.Reservation;
 import com.example.backendengineeringwork.repositories.CarRepository;
 import com.example.backendengineeringwork.repositories.CityRepository;
 import com.example.backendengineeringwork.repositories.ReservationRepository;
-import com.example.backendengineeringwork.security.user.User;
-import com.example.backendengineeringwork.security.user.UserRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.backendengineeringwork.models.User;
+import com.example.backendengineeringwork.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Duration;
 import java.util.List;
-import java.util.Optional;
+
+import static com.example.backendengineeringwork.mappers.ReservationMapper.toDto;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ReservationService {
 
-    @Autowired
     private final ReservationRepository reservationRepository;
-
-    @Autowired
     private final UserRepository userRepository;
-
-    @Autowired
     private final CarRepository carRepository;
-
-    @Autowired
     private final CityRepository cityRepository;
 
-
+    @Transactional(readOnly = true)
     public List<ReservationDto> findAll() {
         List<Reservation> reservationList =  reservationRepository.findAll();
-        return reservationList.stream().map(this::mapToReservastionDto).toList();
+        return reservationList.stream()
+                .map(ReservationMapper::toDto)
+                .toList();
     }
 
-    public ReservationDto findById(Long id) {
-        return mapToReservastionDto(reservationRepository.findById(id).orElse(null ));
+    @Transactional(readOnly = true)
+    public ReservationDto findById(long id) {
+        return toDto(reservationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Reservation not found")));
     }
 
-    public ReservationDto save(ReservationDto reservationDto) {
-        return mapToReservastionDto(reservationRepository.save(mapToReservation(reservationDto)));
+    @Transactional
+    public ReservationDto save(CreateReservationCommand command) {
+        if (command == null) throw new IllegalArgumentException("Command cannot be null");
+
+        Reservation toSaveReservation = mapToReservation(command);
+
+        Reservation saved = reservationRepository.save(toSaveReservation);
+        return toDto(saved);
     }
 
-    public void deleteById(Long id) {
+    @Transactional
+    public ReservationDto update(long id, CreateReservationCommand command) {
+        if (command == null) throw new IllegalArgumentException("Command cannot be null");
+
+        Reservation reservation = reservationRepository.findByIdWithLock(id)
+                .orElseThrow(() -> new EntityNotFoundException("Reservation not found"));
+
+        User user = userRepository.findById(command.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        Car car = carRepository.findById(command.getCarId())
+                .orElseThrow(() -> new EntityNotFoundException("Car not found"));
+        City rentCity = cityRepository.findById(command.getRentCityId())
+                .orElseThrow(() -> new EntityNotFoundException("Rent city not found"));
+        City arrivalCity = cityRepository.findById(command.getArrivalCityId())
+                .orElseThrow(() -> new EntityNotFoundException("Arrival city not found"));
+
+        reservation.setCar(car);
+        reservation.setRentDate(command.getRentDate());
+        reservation.setArrivalDate(command.getArrivalDate());
+        reservation.setUser(user);
+        reservation.setRentCity(rentCity);
+        reservation.setArrivalCity(arrivalCity);
+
+        return toDto(reservation);
+    }
+
+    public void deleteById(long id) {
         reservationRepository.deleteById(id);
     }
 
-    public List<ReservationDto> getReservationByCarId(Long carId) {
-        return reservationRepository.findByCarId(carId)
-                .stream().map(this::mapToReservastionDto).toList();
+    @Transactional(readOnly = true)
+    public List<ReservationDto> getReservationByCarId(long carId) {
+        return reservationRepository.findByCarId(carId).stream()
+                .map(ReservationMapper::toDto)
+                .toList();
     }
 
-    public List<ReservationDto> getReservationByUserId(Long userId) {
-        return reservationRepository.findByUserId(userId)
-                .stream().map(this::mapToReservastionDto).toList();
+    @Transactional(readOnly = true)
+    public List<ReservationDto> getReservationByUserId(long userId) {
+        return reservationRepository.findByUserId(userId).stream()
+                .map(ReservationMapper::toDto)
+                .toList();
     }
 
+    @Transactional(readOnly = true)
     public List<ReservationViewDto> getReservationByUserEmail(String email){
-        return reservationRepository.findByUser_Email(email)
-                .stream().map(this::mapToReservationViewDto).toList();
+        if (email == null) throw new IllegalArgumentException("Email cannot be null");
+
+        return reservationRepository.findByUser_Email(email).stream()
+                .map(ReservationMapper::toViewDto)
+                .toList();
     }
 
-    private ReservationDto mapToReservastionDto(Reservation reservation){
-        return new ReservationDto(
-                reservation.getId(),
-                reservation.getCar().getId(),
-                reservation.getUser().getId(),
-                reservation.getRentCity().getId(),
-                reservation.getArrivalCity().getId(),
-                reservation.getRentDate(),
-                reservation.getArrivalDate()
-        );
-    }
+    public Reservation mapToReservation(CreateReservationCommand command) {
+        User user = userRepository.findById(command.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+        Car car = carRepository.findById(command.getCarId())
+                .orElseThrow(() -> new EntityNotFoundException("Car not found"));
+        City rentCity = cityRepository.findById(command.getRentCityId())
+                .orElseThrow(() -> new EntityNotFoundException("Rent city not found"));
+        City arrivalCity = cityRepository.findById(command.getArrivalCityId())
+                .orElseThrow(() -> new EntityNotFoundException("Arrival city not found"));
 
-    private ReservationViewDto mapToReservationViewDto(Reservation reservation){
-        Long costOfRent = reservation.getCar().getRentPrizePerDay() * Duration.between(reservation.getRentDate(), reservation.getArrivalDate()).toDays();
-        return new ReservationViewDto(
-                reservation.getCar().getBrand() + " " + reservation.getCar().getModel().getName(),
-                reservation.getRentCity().getName(),
-                reservation.getArrivalCity().getName(),
-                reservation.getRentDate(),
-                reservation.getArrivalDate(),
-                costOfRent
-        );
-    }
-
-    private Reservation mapToReservation(ReservationDto reservationDto){
-        User user = userRepository.getReferenceById(reservationDto.userId());
-        Car car = carRepository.getReferenceById(reservationDto.carId());
-        City rentCity = cityRepository.getReferenceById(reservationDto.rentCityId());
-        City arrivalCity = cityRepository.getReferenceById(reservationDto.arrivalCityId());
-        return new Reservation(reservationDto.id(),
-                car,
-                reservationDto.rentDate(),
-                reservationDto.arrivalDate(),
-                user,
-                rentCity,
-                arrivalCity);
+        return Reservation.builder()
+                .car(car)
+                .rentDate(command.getRentDate())
+                .arrivalDate(command.getArrivalDate())
+                .user(user)
+                .rentCity(rentCity)
+                .arrivalCity(arrivalCity)
+                .build();
     }
 }

@@ -1,27 +1,43 @@
 package com.example.backendengineeringwork.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.Data;
-import javax.validation.constraints.*;
+import lombok.ToString;
 
-import java.util.UUID;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
-@Data
 public class CarModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @NotBlank
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JoinColumn(name = "engine_id")
     private Engine engine;
 
@@ -30,7 +46,7 @@ public class CarModel {
 
     @NotNull
     @Min(1)
-    private Integer seats;
+    private int seats;
 
     @NotBlank
     private String drive;
@@ -39,12 +55,12 @@ public class CarModel {
     private String transmission;
 
     @NotNull
-    private Integer topSpeed;
+    private int topSpeed;
 
     @NotNull
-    private Double acceleration;
+    private double acceleration;
 
     @NotNull
     @DecimalMin(value = "0")
-    private Double fuelConsumption;
+    private double fuelConsumption;
 }

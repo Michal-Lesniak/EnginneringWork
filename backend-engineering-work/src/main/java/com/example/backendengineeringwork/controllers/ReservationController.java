@@ -1,10 +1,11 @@
 package com.example.backendengineeringwork.controllers;
 
-import com.example.backendengineeringwork.dto.Reservation.ReservationDto;
-import com.example.backendengineeringwork.dto.Reservation.ReservationViewDto;
+import com.example.backendengineeringwork.commands.reservation.CreateReservationCommand;
+import com.example.backendengineeringwork.dtos.reservation.ReservationDto;
+import com.example.backendengineeringwork.dtos.reservation.ReservationViewDto;
 import com.example.backendengineeringwork.services.ReservationService;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,68 +13,51 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@NoArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/reservations")
 public class ReservationController{
 
     ReservationService reservationService;
 
-    @Autowired
-    public ReservationController(ReservationService reservationService) {
-        this.reservationService = reservationService;
-    }
-
     @GetMapping
-    public ResponseEntity<List<ReservationDto>> getAll() {
-        return ResponseEntity.ok(reservationService.findAll());
+    public List<ReservationDto> getAll() {
+        return reservationService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReservationDto> getById(@PathVariable Long id) {
-        ReservationDto reservationDto = reservationService.findById(id);
-        if(reservationDto != null){
-            return ResponseEntity.ok().body(reservationDto);
-        }
-        return ResponseEntity.notFound().build();
+    public ReservationDto getById(@PathVariable long id) {
+       return reservationService.findById(id);
     }
 
     @PostMapping
-    public ResponseEntity<ReservationDto> create(@RequestBody ReservationDto entity) {
-        return ResponseEntity.ok(reservationService.save(entity));
+    @ResponseStatus(HttpStatus.CREATED)
+    public ReservationDto create(@RequestBody CreateReservationCommand command) {
+           return reservationService.save(command);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ReservationDto> update(@PathVariable Long id, @RequestBody ReservationDto updatedEntity) {
-        if (reservationService.findById(id) != null) {
-            return ResponseEntity.ok().body(reservationService.save(updatedEntity));
-        }
-        return ResponseEntity.notFound().build();
+    public ReservationDto update(@PathVariable long id, @RequestBody CreateReservationCommand command) {
+           return reservationService.update(id, command);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (reservationService.findById(id) != null) {
-            reservationService.deleteById(id);
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.notFound().build();
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable long id) {
+        reservationService.deleteById(id);
     }
 
-    @GetMapping("/car/{car_id}")
-    public ResponseEntity<List<ReservationDto>> getReservationByCarId(@PathVariable Long carId){
-        List<ReservationDto> reservations = reservationService.getReservationByCarId(carId);
-        return ResponseEntity.ok().body(reservations);
+    @GetMapping("/car/{carId}")
+    public List<ReservationDto> getReservationByCarId(@PathVariable long carId){
+        return reservationService.getReservationByCarId(carId);
     }
 
-    @GetMapping("/person/{user_id}")
-    public ResponseEntity<List<ReservationDto>> getReservationByUserId(@PathVariable Long userId){
-        List<ReservationDto> reservations = reservationService.getReservationByUserId(userId);
-        return ResponseEntity.ok().body(reservations);
+    @GetMapping("/person/{userId}")
+    public List<ReservationDto> getReservationByUserId(@PathVariable long userId){
+        return reservationService.getReservationByUserId(userId);
     }
 
     @PostMapping("/getByEmail")
-    public ResponseEntity<List<ReservationViewDto>> getReservationByEmail(@RequestBody String email){
-        List<ReservationViewDto> reservations = reservationService.getReservationByUserEmail(email);
-        return ResponseEntity.ok().body(reservations);
+    public List<ReservationViewDto> getReservationByEmail(@RequestBody String email){
+        return reservationService.getReservationByUserEmail(email);
     }
 }

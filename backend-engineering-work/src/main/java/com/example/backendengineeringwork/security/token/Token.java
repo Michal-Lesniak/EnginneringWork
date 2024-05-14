@@ -1,17 +1,20 @@
 package com.example.backendengineeringwork.security.token;
 
-import com.example.backendengineeringwork.security.user.User;
+import com.example.backendengineeringwork.models.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Entity
 public class Token {
 

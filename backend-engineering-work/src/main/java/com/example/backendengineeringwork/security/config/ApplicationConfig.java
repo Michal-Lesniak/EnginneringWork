@@ -1,6 +1,6 @@
 package com.example.backendengineeringwork.security.config;
 
-import com.example.backendengineeringwork.security.user.UserRepository;
+import com.example.backendengineeringwork.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

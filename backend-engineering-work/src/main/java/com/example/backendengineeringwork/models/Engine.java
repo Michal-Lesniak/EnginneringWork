@@ -10,23 +10,28 @@ import org.antlr.v4.runtime.misc.NotNull;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
-@Data
 public class Engine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @NotNull
     @DecimalMin(value = "0.5")
-    private Double engineCapacity;
+    private double engineCapacity;
 
     @NotNull
-    private Integer power;
+    private int power;
 
     @NotNull
-    private Integer torque;
+    private int torque;
 
     @NotBlank
     private String fuel;

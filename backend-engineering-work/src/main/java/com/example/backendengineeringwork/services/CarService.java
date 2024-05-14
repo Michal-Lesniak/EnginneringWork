@@ -1,40 +1,78 @@
 package com.example.backendengineeringwork.services;
 
-import com.example.backendengineeringwork.dto.ImageCar.ResponseImageCarDto;
-import com.example.backendengineeringwork.dto.car.CarDetails;
-import com.example.backendengineeringwork.dto.car.CarPreview;
+import com.example.backendengineeringwork.commands.car.CreateCarCommand;
+import com.example.backendengineeringwork.dtos.car.CarDto;
+import com.example.backendengineeringwork.dtos.imageCar.ResponseImageCarDto;
+import com.example.backendengineeringwork.dtos.car.CarDetailsDto;
+import com.example.backendengineeringwork.dtos.car.CarPreviewDto;
+import com.example.backendengineeringwork.mappers.CarMapper;
 import com.example.backendengineeringwork.models.Car;
+import com.example.backendengineeringwork.models.ImageCar;
 import com.example.backendengineeringwork.models.Reservation;
 import com.example.backendengineeringwork.repositories.CarRepository;
 import com.example.backendengineeringwork.repositories.ImageCarRepository;
 import com.example.backendengineeringwork.repositories.ReservationRepository;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.backendengineeringwork.mappers.CarMapper.fromCommand;
+import static com.example.backendengineeringwork.mappers.CarMapper.toDto;
+
 @Service
-public class CarService extends AbstractService<Car, Long>{
+@RequiredArgsConstructor
+public class CarService{
 
     private final CarRepository carRepository;
 
     private final ReservationRepository reservationRepository;
 
-    private final ImageCarService imageCarService;
+    private final ImageCarRepository imageCarRepository;
 
-    public CarService(CarRepository repository, CarRepository carRepository, ReservationRepository reservationRepository, ImageCarRepository imageCarRepository, ImageCarService imageCarService){
-        super(repository);
-        this.carRepository = carRepository;
-        this.reservationRepository = reservationRepository;
-        this.imageCarService = imageCarService;
+    @Transactional(readOnly = true)
+    public List<CarDto> findAll() {
+        return carRepository.findAll().stream()
+                .map(CarMapper::toDto)
+                .toList();
     }
 
-    public CarDetails getCarDetails(Long id) {
-        Car car = carRepository.getReferenceById(id);
+    @Transactional(readOnly = true)
+    public CarDto findById(long id) {
+        Car car = carRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Car with id: " + id + " not found")
+        );
+        return toDto(car);
+    }
+
+    public CarDto save(CreateCarCommand command) {
+        if(command == null) throw new IllegalArgumentException("Car cannot be null");
+
+        Car car = carRepository.save(fromCommand(command));
+        return toDto(car);
+    }
+
+    public void deleteById(long id) {
+        carRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public CarDetailsDto getCarDetails(long id) {
+        Car car = carRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Car with id: " + id + " not found")
+        );
+
         List<Reservation> reservationList = reservationRepository.findByCarId(id);
         List<LocalDateTime> localDates = new ArrayList<>();
-        List<ResponseImageCarDto> imageCarDtoList = imageCarService.getImagesByCarId(car.getId());
+        List<ImageCar> imageCarArrayList = imageCarRepository.findAllByCar_Id(car.getId());
+
+        List<ResponseImageCarDto> imageCarDtoList = imageCarArrayList.stream()
+                .map(imageCar -> new ResponseImageCarDto(imageCar.getId(), imageCar.getName(), imageCar.getPath())).toList();
+
 
         for(Reservation reservation:reservationList){
             LocalDateTime current = reservation.getRentDate();
@@ -43,7 +81,7 @@ public class CarService extends AbstractService<Car, Long>{
                 current = current.plusDays(1);
             }
         }
-        return new CarDetails(car.getId(),
+        return new CarDetailsDto(car.getId(),
                 car.getBrand(),
                 car.getRentPrizePerDay(),
                 car.getModel(),
@@ -52,9 +90,11 @@ public class CarService extends AbstractService<Car, Long>{
                 imageCarDtoList);
     }
 
-    public List<CarPreview> getAllCars(){
+    @Transactional(readOnly = true)
+    public List<CarPreviewDto> getAllCarsPreview(){
         List<Car> cars = carRepository.findAll();
-        return cars.stream().map(car -> new CarPreview(car.getId(),
+
+        return cars.stream().map(car -> new CarPreviewDto(car.getId(),
                 car.getBrand() + " " + car.getModel().getName(),
                 car.getRentPrizePerDay(),
                 car.getModel().getAcceleration(),
@@ -63,8 +103,9 @@ public class CarService extends AbstractService<Car, Long>{
                 car.getModel().getSeats(),
                 car.getModel().getTransmission(),
                 car.getProductionYear(),
-                imageCarService.getImagesByCarId(car.getId()))).toList();
+                imageCarRepository.findAllByCar_Id(car.getId()).stream()
+                        .map(imageCar -> new ResponseImageCarDto(imageCar.getId(), imageCar.getName(), imageCar.getPath()))
+                        .toList()))
+                .toList();
     }
-
-
 }

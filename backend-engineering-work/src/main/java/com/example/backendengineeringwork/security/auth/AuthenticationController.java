@@ -1,13 +1,13 @@
 package com.example.backendengineeringwork.security.auth;
 
 
+import com.example.backendengineeringwork.commands.user.RegisterUserCommand;
+import com.example.backendengineeringwork.security.dtos.AuthenticationRequest;
+import com.example.backendengineeringwork.security.dtos.AuthenticationResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
 
 @RestController
 @CrossOrigin
@@ -18,23 +18,22 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
+    public AuthenticationResponse register(
+            @RequestBody RegisterUserCommand request
     ) {
-        return ResponseEntity.ok(service.register(request));
+       return service.register(request);
     }
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> authenticate(
+    public AuthenticationResponse authenticate(
             @RequestBody AuthenticationRequest request
     ) {
-        return ResponseEntity.ok(service.authenticate(request));
+        return service.authenticate(request);
     }
 
     @PostMapping("/refresh-token")
     public void refreshToken(
             HttpServletRequest request,
-            HttpServletResponse response
-    ) throws IOException {
+            HttpServletResponse response ){
         service.refreshToken(request, response);
     }
 }
