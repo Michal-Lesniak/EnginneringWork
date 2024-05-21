@@ -2,12 +2,13 @@ package com.example.backendengineeringwork.services;
 
 import com.example.backendengineeringwork.commands.imageCar.RequestUploadImageCarDto;
 import com.example.backendengineeringwork.dtos.imageCar.ResponseImageCarDto;
+import com.example.backendengineeringwork.exceptions.ArgumentCannotBeNullException;
 import com.example.backendengineeringwork.exceptions.ImageDeleteException;
 import com.example.backendengineeringwork.exceptions.ImageUploadException;
+import com.example.backendengineeringwork.exceptions.NotFoundException;
 import com.example.backendengineeringwork.models.ImageCar;
 import com.example.backendengineeringwork.repositories.CarRepository;
 import com.example.backendengineeringwork.repositories.ImageCarRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,7 @@ public class ImageCarService {
     @Transactional
     public ResponseImageCarDto uploadImage(RequestUploadImageCarDto uploadImage) {
         if (uploadImage.file() == null) {
-            throw new IllegalArgumentException("File cannot be null");
+            throw new ArgumentCannotBeNullException("File cannot be null");
         }
 
         String rootPath = "C:\\Users\\Michał\\Desktop\\EnginneringWork\\frontend-engineering-work\\src\\assets";
@@ -44,7 +45,7 @@ public class ImageCarService {
             image.setType(uploadImage.file().getContentType());
             image.setPath(fullPath);
             image.setCar(carRepository.findById(uploadImage.carId())
-                    .orElseThrow(() -> new EntityNotFoundException("Car with id: " + uploadImage.carId() + " not found")));
+                    .orElseThrow(() -> new NotFoundException("Car with id: " + uploadImage.carId() + " not found")));
             uploadImage.file().transferTo(new File(fullPath));
         } catch (IOException e) {
             throw new ImageUploadException("An error occurred while uploading the image", e);
@@ -58,7 +59,7 @@ public class ImageCarService {
     @Transactional
     public void deleteImage(long id)  {
         ImageCar imageCar = imageCarRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Image with id: " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException("Image with id: " + id + " not found"));
 
         Path path = Paths.get(imageCar.getPath());
         if (Files.exists(path)) {

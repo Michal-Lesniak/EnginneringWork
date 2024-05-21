@@ -3,16 +3,17 @@ package com.example.backendengineeringwork.services;
 import com.example.backendengineeringwork.commands.reservation.CreateReservationCommand;
 import com.example.backendengineeringwork.dtos.reservation.ReservationDto;
 import com.example.backendengineeringwork.dtos.reservation.ReservationViewDto;
+import com.example.backendengineeringwork.exceptions.ArgumentCannotBeNullException;
+import com.example.backendengineeringwork.exceptions.NotFoundException;
 import com.example.backendengineeringwork.mappers.ReservationMapper;
 import com.example.backendengineeringwork.models.Car;
 import com.example.backendengineeringwork.models.City;
 import com.example.backendengineeringwork.models.Reservation;
+import com.example.backendengineeringwork.models.User;
 import com.example.backendengineeringwork.repositories.CarRepository;
 import com.example.backendengineeringwork.repositories.CityRepository;
 import com.example.backendengineeringwork.repositories.ReservationRepository;
-import com.example.backendengineeringwork.models.User;
 import com.example.backendengineeringwork.repositories.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,12 +42,12 @@ public class ReservationService {
     @Transactional(readOnly = true)
     public ReservationDto findById(long id) {
         return toDto(reservationRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Reservation not found")));
+                .orElseThrow(() -> new NotFoundException("Reservation not found")));
     }
 
     @Transactional
     public ReservationDto save(CreateReservationCommand command) {
-        if (command == null) throw new IllegalArgumentException("Command cannot be null");
+        if (command == null) throw new ArgumentCannotBeNullException("Command cannot be null");
 
         Reservation toSaveReservation = mapToReservation(command);
 
@@ -56,19 +57,19 @@ public class ReservationService {
 
     @Transactional
     public ReservationDto update(long id, CreateReservationCommand command) {
-        if (command == null) throw new IllegalArgumentException("Command cannot be null");
+        if (command == null) throw new ArgumentCannotBeNullException("Command cannot be null");
 
         Reservation reservation = reservationRepository.findByIdWithLock(id)
-                .orElseThrow(() -> new EntityNotFoundException("Reservation not found"));
+                .orElseThrow(() -> new NotFoundException("Reservation not found"));
 
         User user = userRepository.findById(command.getUserId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
         Car car = carRepository.findById(command.getCarId())
-                .orElseThrow(() -> new EntityNotFoundException("Car not found"));
+                .orElseThrow(() -> new NotFoundException("Car not found"));
         City rentCity = cityRepository.findById(command.getRentCityId())
-                .orElseThrow(() -> new EntityNotFoundException("Rent city not found"));
+                .orElseThrow(() -> new NotFoundException("Rent city not found"));
         City arrivalCity = cityRepository.findById(command.getArrivalCityId())
-                .orElseThrow(() -> new EntityNotFoundException("Arrival city not found"));
+                .orElseThrow(() -> new NotFoundException("Arrival city not found"));
 
         reservation.setCar(car);
         reservation.setRentDate(command.getRentDate());
@@ -100,7 +101,7 @@ public class ReservationService {
 
     @Transactional(readOnly = true)
     public List<ReservationViewDto> getReservationByUserEmail(String email){
-        if (email == null) throw new IllegalArgumentException("Email cannot be null");
+        if (email == null) throw new ArgumentCannotBeNullException("Email cannot be null");
 
         return reservationRepository.findByUser_Email(email).stream()
                 .map(ReservationMapper::toViewDto)
@@ -109,13 +110,13 @@ public class ReservationService {
 
     public Reservation mapToReservation(CreateReservationCommand command) {
         User user = userRepository.findById(command.getUserId())
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
         Car car = carRepository.findById(command.getCarId())
-                .orElseThrow(() -> new EntityNotFoundException("Car not found"));
+                .orElseThrow(() -> new NotFoundException("Car not found"));
         City rentCity = cityRepository.findById(command.getRentCityId())
-                .orElseThrow(() -> new EntityNotFoundException("Rent city not found"));
+                .orElseThrow(() -> new NotFoundException("Rent city not found"));
         City arrivalCity = cityRepository.findById(command.getArrivalCityId())
-                .orElseThrow(() -> new EntityNotFoundException("Arrival city not found"));
+                .orElseThrow(() -> new NotFoundException("Arrival city not found"));
 
         return Reservation.builder()
                 .car(car)

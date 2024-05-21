@@ -1,0 +1,15 @@
+
+X	java:S125"<This block of commented-out lines of code should be removed.(¬å’º8²®…¹÷1
+~
+java:S1128"aRemove this unused import 'com.example.backendengineeringwork.commands.user.RegisterUserCommand'.(ˆŒ®8»®…¹÷1
+…
+java:S1128"cRemove this unused import 'com.example.backendengineeringwork.security.auth.AuthenticationService'.(Ğ»à˜ÿÿÿÿÿ8»®…¹÷1
+d
+java:S1128"GRemove this unused import 'org.springframework.boot.CommandLineRunner'.(È—ÿÅ8¼®…¹÷1
+e
+java:S1128"HRemove this unused import 'org.springframework.context.annotation.Bean'.(‚î‰Ş8¼®…¹÷1
+R
+java:S1128
+"0Remove this unused import 'java.time.LocalDate'.(›‘¬èıÿÿÿÿ8¼®…¹÷1
+s
+java:S1128"QRemove this unused import 'com.example.backendengineeringwork.models.Role.ADMIN'.(Ëèö‰øÿÿÿÿ8¼®…¹÷1

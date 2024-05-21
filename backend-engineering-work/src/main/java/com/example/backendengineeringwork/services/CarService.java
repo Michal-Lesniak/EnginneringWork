@@ -1,10 +1,12 @@
 package com.example.backendengineeringwork.services;
 
 import com.example.backendengineeringwork.commands.car.CreateCarCommand;
-import com.example.backendengineeringwork.dtos.car.CarDto;
-import com.example.backendengineeringwork.dtos.imageCar.ResponseImageCarDto;
 import com.example.backendengineeringwork.dtos.car.CarDetailsDto;
+import com.example.backendengineeringwork.dtos.car.CarDto;
 import com.example.backendengineeringwork.dtos.car.CarPreviewDto;
+import com.example.backendengineeringwork.dtos.imageCar.ResponseImageCarDto;
+import com.example.backendengineeringwork.exceptions.ArgumentCannotBeNullException;
+import com.example.backendengineeringwork.exceptions.NotFoundException;
 import com.example.backendengineeringwork.mappers.CarMapper;
 import com.example.backendengineeringwork.models.Car;
 import com.example.backendengineeringwork.models.ImageCar;
@@ -12,7 +14,6 @@ import com.example.backendengineeringwork.models.Reservation;
 import com.example.backendengineeringwork.repositories.CarRepository;
 import com.example.backendengineeringwork.repositories.ImageCarRepository;
 import com.example.backendengineeringwork.repositories.ReservationRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,13 +45,13 @@ public class CarService{
     @Transactional(readOnly = true)
     public CarDto findById(long id) {
         Car car = carRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Car with id: " + id + " not found")
+                () -> new NotFoundException("Car with id: " + id + " not found")
         );
         return toDto(car);
     }
 
     public CarDto save(CreateCarCommand command) {
-        if(command == null) throw new IllegalArgumentException("Car cannot be null");
+        if(command == null) throw new ArgumentCannotBeNullException("Car cannot be null");
 
         Car car = carRepository.save(fromCommand(command));
         return toDto(car);
@@ -63,7 +64,7 @@ public class CarService{
     @Transactional(readOnly = true)
     public CarDetailsDto getCarDetails(long id) {
         Car car = carRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Car with id: " + id + " not found")
+                () -> new NotFoundException("Car with id: " + id + " not found")
         );
 
         List<Reservation> reservationList = reservationRepository.findByCarId(id);

@@ -1,7 +1,9 @@
 package com.example.backendengineeringwork.exceptions.handler;
 
+import com.example.backendengineeringwork.exceptions.ArgumentCannotBeNullException;
 import com.example.backendengineeringwork.exceptions.ImageDeleteException;
 import com.example.backendengineeringwork.exceptions.ImageUploadException;
+import com.example.backendengineeringwork.exceptions.NotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +23,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
+
+    @ExceptionHandler(ArgumentCannotBeNullException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(ArgumentCannotBeNullException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException e) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<String> handleNotFoundException(NotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 }
